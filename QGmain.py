@@ -1,3 +1,7 @@
+#QGmain.py Author: Tom George
+#To use, set user input variables, check global variable, 
+
+
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,22 +10,25 @@ from eofs.standard import Eof
 from time import time
 import sys 
 sys.path.append('./networks/')
-from NETthreelayerconv_2fc import neuralnetwork #NET------ file contains the neural net architecture, as a function 
 
 
 
+#USER INPUT VARIABLES
+from NET4c3f_big import neuralnetwork #NET------ file contains the neural net architecture
+savekey = '-'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results aren saved under
+flux = "PSI2_f"  #flux to learn, probably PSI2 (unfiltered) or PSI2_f (filtered)
+field = "PSI1_f"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
 
-#DEFINE VARIABLES
-eps = 1e-3 #learning rate
+
+
+#SOME GLOBAL VARIABLES
+eps = 1e-3 #adamoptimizer learning rate
 K = 100 #learning batch size
-savekey = '-' #explain network and make the save recognisable
 reload_data = True #if data is already loaded, save time by setting False
-testfreq = 100
-drop_prob = 0.7
+testfreq = 100 #how often testing is done 
+drop_prob = 0.7 #this is the keep-probability
 data_path = './data256_4000/'
 
-flux = "PSI2_f"
-field = "PSI1_f"
 
 
 
@@ -60,27 +67,8 @@ testimages = testimages_
 trainoutput = trainoutput_
 testoutput = testoutput_
     
-# testoutput_f = np.reshape(np.load(data_path + "flux_psi2_f_test" + ".npz").items()[0][1],(-1,1))
-# testoutput_full = np.reshape(np.load(data_path + "flux_test" + ".npz").items()[0][1],(-1,1))
-# plt.plot(np.arange(len(testoutput))[0:500],testoutput[0:500],label='Flux of psi2')
-# plt.plot(np.arange(len(testoutput_f))[0:500],testoutput_f[0:500],label='Flux of psi2 filtered')
-# plt.plot(np.arange(len(testoutput_full))[0:500],testoutput_full[0:500],label='Full flux of q1')
-# plt.legend()
-# plt.show()
 
 
-
-
-
-##2) Take only the first M0 EOF modes
-#n=50
-#trainimages_eof = eof_basis.eofs(neofs=n)
-#trainimages = np.dot(np.dot(trainimages_,trainimages_eof.T),eof_basis.eofs(neofs=n))
-#testimages = np.dot(np.dot(testimages_,trainimages_eof.T),eof_basis.eofs(neofs=n))
-#plt.plot(np.arange(200),eof_basis.eigenvalues()[0:200])
-#plt.xlabel("EOF index, i")
-#plt.ylabel("EOF Variance")
-#plt.savefig("./figures3/variances.png", dpi=300, bbox_inches='tight',transparent=True)
 
 
 ##3) Train on only the first s images in your total training data
@@ -91,43 +79,6 @@ testoutput = testoutput_
 # testoutput = testoutput_
 
 
-#4) Add noise
-#noise_ratio = 5
-#noise = np.random.normal(0, scale = noise_ratio*np.std(trainimages_), size = (len(trainimages_),64,64))
-#trainimages = trainimages_+noise
-#testimages = testimages_
-#trainoutput = trainoutput_
-#testoutput = testoutput_
-
-
-
-#6) Add in some of PSI1
-#n = 1024
-#PSI1_eof = eof_basis.eofs(neofs=n)[:,1024:2048]
-#PSI1trainimages = np.dot(np.dot(trainimages_[:,1024:2048],PSI1_eof.T),PSI1_eof)
-#PSI1testimages = np.dot(np.dot(testimages_[:,1024:2048],PSI1_eof.T),PSI1_eof)
-#
-#trainimages = np.concatenate((trainimages_[:,0:1024],PSI1trainimages),1)
-#testimages = np.concatenate((testimages_[:,0:1024],PSI1testimages),1)
-#
-#
-#
-#bases = eof_basis.eofs(neofs=2048)
-#plt.imshow(np.reshape(bases[1],(64,32)))
-#plt.axis('off')
-#plt.savefig("./figures/eofconcat1.png", dpi=300, bbox_inches='tight',transparent=True)
-
-
-#7) Add in a second field in the fourth dimension
-
-#trainimages_ = np.empty((len(PSI1_train),64,64,2))
-#trainimages_[:,:,:,0] = PSI1_train; del PSI1_train
-#trainimages_[:,:,:,1] = PV1_train; del PV1_train
-#trainoutput = flux_train; del flux_train
-#testimages_ = np.empty((len(PSI1_test),64,64,2))
-#testimages_[:,:,:,0] = PSI1_test; del PSI1_test
-#testimages_[:,:,:,1] = PV1_test; del PV1_test
-#testoutput = flux_test; del flux_test
 
 
 
