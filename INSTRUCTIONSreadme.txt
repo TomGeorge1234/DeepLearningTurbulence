@@ -1,6 +1,4 @@
-readme.txt 
-
-LILI IS A POO
+readme.txt
 
 
 
