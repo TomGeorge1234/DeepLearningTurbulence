@@ -14,10 +14,10 @@ sys.path.append('./networks/')
 
 
 #USER INPUT VARIABLES
-from NET4c3f_big import neuralnetwork #NET------ file contains the neural net architecture
-savekey = '-'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results aren saved under
-flux = "PSI2_f"  #flux to learn, probably PSI2 (unfiltered) or PSI2_f (filtered)
-field = "PSI1_f"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
+from NET1c2f import neuralnetwork #NET------ file contains the neural net architecture
+savekey = '1c2f'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results aren saved under with warning to prevent accidental overwrite
+flux = "PSI2"  #flux to learn, probably PSI2 (unfiltered) or PSI2_f (filtered)
+field = "PSI1"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
 
 
 
@@ -187,22 +187,22 @@ def main(_):
 
                 #loss function
                 plt.subplot(223)
-                if i<10*len(trainimages)/K:
+                if i<3*len(trainimages)/K:
                     plt.plot(np.arange(i)*K/len(trainimages),cost_array[:i],label="Training")
                     plt.plot(np.arange(int(i/testfreq)+1)*testfreq*K/len(trainimages),cost_test_array[:int(i/testfreq)+1],label="Testing")
                 else:
-                    plt.plot(np.arange(int(i-10*len(trainimages)/K),i)*K/len(trainimages),cost_array[int(i-10*len(trainimages)/K):i],label="Training")
-                    plt.plot(np.arange(int((i-10*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),cost_test_array[int((i-10*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")
+                    plt.plot(np.arange(int(i-3*len(trainimages)/K),i)*K/len(trainimages),cost_array[int(i-3*len(trainimages)/K):i],label="Training")
+                    plt.plot(np.arange(int((i-3*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),cost_test_array[int((i-3*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")
                 plt.xlabel("Epochs"); plt.ylabel("Loss")
 
                 #R plot
                 plt.subplot(224)
-                if i<10*len(trainimages)/K:
+                if i<3*len(trainimages)/K:
                     plt.plot(np.arange(i)*K/len(trainimages),accuracy_array[:i],label="Training")
                     plt.plot(np.arange(int(i/testfreq)+1)*testfreq*K/len(trainimages),accuracy_test_array[:int(i/testfreq)+1],label="Testing")
                 else:
-                    plt.plot(np.arange(int(i-10*len(trainimages)/K),i)*K/len(trainimages),accuracy_array[int(i-10*len(trainimages)/K):i],label="Training")
-                    plt.plot(np.arange(int((i-10*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),accuracy_test_array[int((i-10*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")
+                    plt.plot(np.arange(int(i-3*len(trainimages)/K),i)*K/len(trainimages),accuracy_array[int(i-3*len(trainimages)/K):i],label="Training")
+                    plt.plot(np.arange(int((i-3*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),accuracy_test_array[int((i-3*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")
                 plt.xlabel("Epochs"); plt.ylabel("R")
 
                 plt.tight_layout(pad=0.4, w_pad=0.3, h_pad=1.0)

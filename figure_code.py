@@ -189,4 +189,3 @@ plt.savefig("./figures3/filtervsnonfilter.png", dpi=300, bbox_inches = 'tight',t
 # plt.savefig("./figures3/fluxscatter.png", dpi=300, bbox_inches = 'tight', transparent=True)
 
 
-
