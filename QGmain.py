@@ -14,8 +14,8 @@ sys.path.append('./networks/')
 
 
 #USER INPUT VARIABLES
-from NET1c2f import neuralnetwork #NET------ file contains the neural net architecture
-savekey = '1c2f'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results aren saved under with warning to prevent accidental overwrite
+from NET3c2f import neuralnetwork #NET------ file contains the neural net architecture
+savekey = '-'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results aren saved under with warning to prevent accidental overwrite
 flux = "PSI2"  #flux to learn, probably PSI2 (unfiltered) or PSI2_f (filtered)
 field = "PSI1"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
 
@@ -102,6 +102,8 @@ def skill(yp,yt):
 #initialie arrays
 cost_array = np.array([])
 cost_test_array = np.array([])
+skill_array = np.array([])
+skill_test_array = np.array([])
 accuracy_array = np.array([])
 accuracy_test_array = np.array([])
 
@@ -148,6 +150,10 @@ def main(_):
             accuracy_ = accuracy(yp_,batch[1])
             global accuracy_array
             accuracy_array = np.append(accuracy_array,accuracy_)
+            skill_ = skill(yp_,batch[1])
+            global skill_array
+            skill_array = np.append(skill_array,skill_)
+
 
             #run a test
             if i % testfreq == 0:
@@ -164,6 +170,8 @@ def main(_):
                 global accuracy_test_array
                 accuracy_test_array = np.append(accuracy_test_array,accuracy_test)
                 skill_test = skill(yp_test,yt_test)
+                global skill_test_array
+                skill_test_array = np.append(skill_test_array,skill_test)
                 #plot relevant figures
                 plt.figure(1,(6.5,6))
 
@@ -185,15 +193,18 @@ def main(_):
                 plt.xlabel("Days"); plt.ylabel("Output")
                 plt.legend()
 
-                #loss function
+                #skill function
                 plt.subplot(223)
-                if i<3*len(trainimages)/K:
-                    plt.plot(np.arange(i)*K/len(trainimages),cost_array[:i],label="Training")
-                    plt.plot(np.arange(int(i/testfreq)+1)*testfreq*K/len(trainimages),cost_test_array[:int(i/testfreq)+1],label="Testing")
+                if i<0.5*len(trainimages)/K:
+                    plt.plot(np.arange(i)*K/len(trainimages),skill_array[:i],label="Training")
+                    plt.plot(np.arange(int(i/testfreq)+1)*testfreq*K/len(trainimages),skill_test_array[:int(i/testfreq)+1],label="Testing")
+                elif i<3*len(trainimages)/K:
+                    plt.plot(np.arange(i)*K/len(trainimages),skill_array[:i],label="Training")
+                    plt.plot(np.arange(int(i/testfreq)+1)*testfreq*K/len(trainimages),skill_test_array[:int(i/testfreq)+1],label="Testing")
                 else:
-                    plt.plot(np.arange(int(i-3*len(trainimages)/K),i)*K/len(trainimages),cost_array[int(i-3*len(trainimages)/K):i],label="Training")
-                    plt.plot(np.arange(int((i-3*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),cost_test_array[int((i-3*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")
-                plt.xlabel("Epochs"); plt.ylabel("Loss")
+                    plt.plot(np.arange(int(i-3*len(trainimages)/K),i)*K/len(trainimages),skill_array[int(i-3*len(trainimages)/K):i],label="Training")
+                    plt.plot(np.arange(int((i-3*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),skill_test_array[int((i-3*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")
+                plt.xlabel("Epochs"); plt.ylabel("Skill")
 
                 #R plot
                 plt.subplot(224)
@@ -208,15 +219,15 @@ def main(_):
                 plt.tight_layout(pad=0.4, w_pad=0.3, h_pad=1.0)
                 plt.show()
 
-                max_idx = np.argmax(accuracy_test_array)
-                print('R: %.4f, Epoch: %.1f, Cost: %g, Time = %.2f mins, Skill = %.4f' % (accuracy_test, i*K/len(trainoutput), loss_test, (time()-t0)/60, skill_test))
+                max_idx = np.argmax(skill_test_array)
+                print('Skill = %.4f, R: %.4f, Epoch: %.1f, Time = %.2f mins' % (skill_test, accuracy_test, i*K/len(trainoutput), (time()-t0)/60))
                 yp_ = sess.run(yp,feed_dict={x: batch[0], yt: batch[1], keep_prob: drop_prob}) #explicitly calculate yp as a numpy array
 
             i += 1
             if i % int(115200/K) == 0: #saves every epoch in case it is needed to quit early 
                 yt_train = trainoutput
                 yp_train = sess.run(yp,feed_dict={x: trainimages, yt: yt_train, keep_prob: 1})
-                np.savez('./arrays/outfile' + savekey, yp_train, yt_train, yp_test, yt_test, cost_array, cost_test_array, accuracy_array, accuracy_test_array)
+                np.savez('./arrays/outfile' + savekey, yp_train, yt_train, yp_test, yt_test, skill_array, skill_test_array, accuracy_array, accuracy_test_array)
                 print('Saved')
             
         text = 'Max R: %.4f, Training rate: %E, Epoch: %g, Time: %.2f mins, SaveKey: %s, keep_prob: %.2f, Batch size: %g \n' %(np.max(accuracy_test_array), eps, int(i*K/len(trainoutput)), (time()-t0)/60, savekey, drop_prob, K)
@@ -235,7 +246,7 @@ def main(_):
         file.write(text)
 
     #saves important arrays to file so they can be accessed and analysed by other programs
-    np.savez('./arrays/outfile' + savekey, yp_train, yt_train, yp_test, yt_test, cost_array, cost_test_array, accuracy_array, accuracy_test_array)
+    np.savez('./arrays/outfile' + savekey, yp_train, yt_train, yp_test, yt_test, skill_array, skill_test_array, accuracy_array, accuracy_test_array)
 
 
 

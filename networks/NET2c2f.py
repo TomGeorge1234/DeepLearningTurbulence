@@ -1,7 +1,7 @@
 import tensorflow as tf 
 
 
-
+#parameters 40901
     
 #the network 
 def neuralnetwork(x):
@@ -14,26 +14,29 @@ def neuralnetwork(x):
         y_pool1 = avg_pool_2x2(x_image)
     
     with tf.name_scope('conv1'):
-        W_conv1 = weight_variable([4, 4, 1, 20])
-        B_conv1 = bias_variable([20])
+        W_conv1 = weight_variable([4, 4, 1, 8])
+        B_conv1 = bias_variable([8])
         y_conv1 = tf.nn.relu(conv2d(y_pool1, W_conv1) + B_conv1)
     
     with tf.name_scope('pool2'):
         y_pool2 = max_pool_2x2(y_conv1)
         
     with tf.name_scope('conv2'):
-        W_conv2 = weight_variable([4, 4, 20, 50])
-        B_conv2 = bias_variable([50])
+        W_conv2 = weight_variable([4, 4, 8, 16])
+        B_conv2 = bias_variable([16])
         y_conv2 = tf.nn.relu(conv2d(y_pool2, W_conv2) + B_conv2)  
         
     with tf.name_scope('pool3'):
         y_pool3 = max_pool_2x2(y_conv2)
+        
+    with tf.name_scope('pool4'):
+        y_pool4 = max_pool_2x2(y_pool3)
 
     with tf.name_scope('fc1'):
-        W_fc1 = weight_variable([8 * 8 * 50, 150])
+        W_fc1 = weight_variable([8 * 8 * 16, 150])
         B_fc1 = bias_variable([150])
-        y_conv3_flat = tf.reshape(y_pool3, [-1, 8*8*50])
-        y_fc1 = tf.nn.relu(tf.matmul(y_conv3_flat, W_fc1) + B_fc1)
+        y_pool4_flat = tf.reshape(y_pool4, [-1, 8*8*50])
+        y_fc1 = tf.nn.relu(tf.matmul(y_pool4_flat, W_fc1) + B_fc1)
         
     with tf.name_scope('dropout'):
         keep_prob = tf.placeholder(tf.float32)

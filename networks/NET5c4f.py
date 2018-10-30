@@ -1,7 +1,7 @@
 import tensorflow as tf 
 
 
-
+#parameters 538989
     
 #the network 
 def neuralnetwork(x):
@@ -31,23 +31,26 @@ def neuralnetwork(x):
         B_conv3 = bias_variable([32])
         y_conv3 = tf.nn.relu(conv2d(y_pool2, W_conv3) + B_conv3)  
         
+    with tf.name_scope('pool3'):
+        y_pool3 = max_pool_2x2(y_conv3)
+
     with tf.name_scope('conv4'):
         W_conv4 = weight_variable([3, 3, 32, 64])
         B_conv4 = bias_variable([64])
-        y_conv4 = tf.nn.relu(conv2d(y_conv3, W_conv4) + B_conv4)  
+        y_conv4 = tf.nn.relu(conv2d(y_pool3, W_conv4) + B_conv4)  
         
-    with tf.name_scope('pool3'):
-        y_pool3 = max_pool_2x2(y_conv4)
+    with tf.name_scope('pool4'):
+        y_pool4 = max_pool_2x2(y_conv4)
         
     with tf.name_scope('conv5'):
         W_conv5 = weight_variable([3, 3, 64, 128])
         B_conv5 = bias_variable([128])
-        y_conv5 = tf.nn.relu(conv2d(y_pool3, W_conv5) + B_conv5)  
+        y_conv5 = tf.nn.relu(conv2d(y_pool4, W_conv5) + B_conv5)  
         
     with tf.name_scope('fc1'):
-        W_fc1 = weight_variable([8 * 8 * 128, 200])
+        W_fc1 = weight_variable([4 * 4 * 128, 200])
         B_fc1 = bias_variable([200])
-        y_conv5_flat = tf.reshape(y_conv5, [-1, 8*8*128])
+        y_conv5_flat = tf.reshape(y_conv5, [-1, 4*4*128])
         y_fc1 = tf.nn.relu(tf.matmul(y_conv5_flat, W_fc1) + B_fc1)
         
     with tf.name_scope('fc2'):

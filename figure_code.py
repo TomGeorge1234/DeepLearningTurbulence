@@ -27,6 +27,8 @@ def linearly_regressed(yp,yt):
     a = lin_regress(yp,yt)
     return a[0] + a[1]*yp
 
+
+
 #single print of field
 
 # PSI1 = np.load("./data256_4000/" + "PSI1_test" + ".npz").items()[0][1] * 0.1 * np.load("./data256_4000/" + "PSI1_test" + ".npz").items()[2][1] + np.load("./data256_4000/" + "PSI1_test" + ".npz").items()[1][1]
@@ -149,6 +151,47 @@ def linearly_regressed(yp,yt):
 
       
   
+# skill chart for deeper nets 
+def moving_average(data_set, periods=3):
+    weights = np.ones(periods) / periods
+    return np.convolve(data_set, weights, mode='valid')
+
+
+ax = plt.figure().add_subplot(111)
+
+flux_std = np.std(np.load("./data256_4000/" + "fluxes/PSI2" + ".npz").items()[0][1]) 
+
+path = '/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/arrays/outfile'
+
+#calculations of the skills from the costs 
+S1 = 1-((np.min(np.load(path+'1c2f.npz').items()[5][1])**0.5)/flux_std)
+S2 = 1-((np.min(np.load(path+'2c2f.npz').items()[5][1])**0.5)/flux_std)
+S3 = 1-((np.min(np.load(path+'3c2f.npz').items()[5][1])**0.5)/flux_std)
+S4 = 1-((np.min(np.load(path+'4c3f.npz').items()[5][1])**0.5)/flux_std)
+S5 = 1-((np.min(np.load(path+'5c4f.npz').items()[5][1])**0.5)/flux_std)
+S6 = 1-((np.min(np.load(path+'6c4f.npz').items()[5][1])**0.5)/flux_std)
+
+S1_ = 1-((np.min(moving_average(np.load(path+'1c2f.npz').items()[4][1],192))**0.5)/flux_std)
+S2_ = 1-((np.min(moving_average(np.load(path+'2c2f.npz').items()[4][1],192))**0.5)/flux_std)
+S3_ = 1-((np.min(moving_average(np.load(path+'3c2f.npz').items()[4][1],192))**0.5)/flux_std)
+S4_ = 1-((np.min(moving_average(np.load(path+'4c3f.npz').items()[4][1],192))**0.5)/flux_std)
+S5_ = 1-((np.min(moving_average(np.load(path+'5c4f.npz').items()[4][1],192))**0.5)/flux_std)
+S6_ = 1-((np.min(moving_average(np.load(path+'6c4f.npz').items()[4][1],192))**0.5)/flux_std)
+
+y = (S1,S2,S3,S4,S5)
+y_ = (S1_,S2_,S3_,S4_,S5_)
+x = (26161,40901,87525,245282,538989)
+plt.scatter(x,y_,marker='.',label="Training")
+plt.plot(x,y_,alpha=0.7)
+plt.scatter(x,y,marker='.',label="Testing")
+plt.plot(x,y,alpha=0.7)
+plt.ylim(-0.05,1.05)
+ax.set_xscale('log')
+plt.xlabel(r'Complexity (No. trainable parameters)', fontsize=22)
+plt.ylabel(r'Skill', fontsize = 22)
+plt.legend(fontsize = 16)
+plt.show()
+# plt.savefig("./figures3/depth_skill.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
 
