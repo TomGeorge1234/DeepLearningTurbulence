@@ -199,8 +199,8 @@ def main(_):
                     plt.plot(np.arange(i)*K/len(trainimages),skill_array[:i],label="Training")
                     plt.plot(np.arange(int(i/testfreq)+1)*testfreq*K/len(trainimages),skill_test_array[:int(i/testfreq)+1],label="Testing")
                 elif i<3*len(trainimages)/K:
-                    plt.plot(np.arange(i)*K/len(trainimages),skill_array[:i],label="Training")
-                    plt.plot(np.arange(int(i/testfreq)+1)*testfreq*K/len(trainimages),skill_test_array[:int(i/testfreq)+1],label="Testing")
+                    plt.plot(np.arange(int(i-0.5*len(trainimages)/K),i)*K/len(trainimages),skill_array[int(i-0.5*len(trainimages)/K):i],label="Training")
+                    plt.plot(np.arange(int((i-0.5*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),skill_test_array[int((i-0.5*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")
                 else:
                     plt.plot(np.arange(int(i-3*len(trainimages)/K),i)*K/len(trainimages),skill_array[int(i-3*len(trainimages)/K):i],label="Training")
                     plt.plot(np.arange(int((i-3*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),skill_test_array[int((i-3*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")

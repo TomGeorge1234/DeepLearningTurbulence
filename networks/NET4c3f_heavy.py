@@ -1,7 +1,7 @@
 import tensorflow as tf 
 
+#parametres 397823
 
-#parameters 87525
     
 #the network 
 def neuralnetwork(x):
@@ -14,7 +14,7 @@ def neuralnetwork(x):
         y_pool1 = avg_pool_2x2(x_image)
     
     with tf.name_scope('conv1'):
-        W_conv1 = weight_variable([4, 4, 1, 8])
+        W_conv1 = weight_variable([6, 6, 1, 8])
         B_conv1 = bias_variable([8])
         y_conv1 = tf.nn.relu(conv2d(y_pool1, W_conv1) + B_conv1)
     
@@ -22,7 +22,7 @@ def neuralnetwork(x):
         y_pool2 = max_pool_2x2(y_conv1)
         
     with tf.name_scope('conv2'):
-        W_conv2 = weight_variable([4, 4, 8, 16])
+        W_conv2 = weight_variable([5, 5, 8, 16])
         B_conv2 = bias_variable([16])
         y_conv2 = tf.nn.relu(conv2d(y_pool2, W_conv2) + B_conv2)  
         
@@ -30,29 +30,39 @@ def neuralnetwork(x):
         y_pool3 = max_pool_2x2(y_conv2)
     
     with tf.name_scope('conv3'):
-        W_conv3 = weight_variable([4, 4, 16, 32])
-        B_conv3 = bias_variable([32])
+        W_conv3 = weight_variable([4, 4, 16, 50])
+        B_conv3 = bias_variable([50])
         y_conv3 = tf.nn.relu(conv2d(y_pool3, W_conv3) + B_conv3)  
-        
+
     with tf.name_scope('pool4'):
         y_pool4 = max_pool_2x2(y_conv3)
 
+    with tf.name_scope('conv4'):
+        W_conv4 = weight_variable([3, 3, 50, 100])
+        B_conv4 = bias_variable([100])
+        y_conv4 = tf.nn.relu(conv2d(y_pool4, W_conv4) + B_conv4)  
+
     with tf.name_scope('fc1'):
-        W_fc1 = weight_variable([4 * 4 * 32, 150])
-        B_fc1 = bias_variable([150])
-        y_conv3_flat = tf.reshape(y_pool4, [-1, 4*4*32])
+        W_fc1 = weight_variable([4 * 4 * 100, 200])
+        B_fc1 = bias_variable([200])
+        y_conv3_flat = tf.reshape(y_conv4, [-1, 4*4*100])
         y_fc1 = tf.nn.relu(tf.matmul(y_conv3_flat, W_fc1) + B_fc1)
+        
+    with tf.name_scope('fc2'):
+        W_fc2 = weight_variable([200, 80])
+        B_fc2 = bias_variable([80])
+        y_fc2 = tf.nn.relu(tf.matmul(y_fc1, W_fc2) + B_fc2)
         
     with tf.name_scope('dropout'):
         keep_prob = tf.placeholder(tf.float32)
-        y_fc1_drop = tf.nn.dropout(y_fc1, keep_prob)
+        y_fc2_drop = tf.nn.dropout(y_fc2, keep_prob)
 
     with tf.name_scope('fc2'):
-        W_fc2 = weight_variable([150, 1])
-        B_fc2 = bias_variable([1])
-        y_fc2 = tf.matmul(y_fc1_drop, W_fc2) + B_fc2
+        W_fc3 = weight_variable([80, 1])
+        B_fc3 = bias_variable([1])
+        y_fc3 = tf.matmul(y_fc2_drop, W_fc3) + B_fc3
         
-    return y_fc2, keep_prob
+    return y_fc3, keep_prob
 
 #define variables and functions 
 def weight_variable(shape):
