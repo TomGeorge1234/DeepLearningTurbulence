@@ -14,8 +14,8 @@ sys.path.append('./networks/')
 
 
 #USER INPUT VARIABLES
-from NET3c2f import neuralnetwork #NET------ file contains the neural net architecture
-savekey = '-'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results aren saved under with warning to prevent accidental overwrite
+from NET1c2f import neuralnetwork #NET------ file contains the neural net architecture
+savekey = '1c2f'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results aren saved under with warning to prevent accidental overwrite
 flux = "PSI2"  #flux to learn, probably PSI2 (unfiltered) or PSI2_f (filtered)
 field = "PSI1"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
 
@@ -53,14 +53,8 @@ if reload_data == True:
     testoutput_ = out_test ; del out_test
     print('Done.')
     
-#    print("Calculating EOFs")
-#    eof_basis = Eof(trainimages_) #.eofs() give the eof basic vectors, .eigenvalues() give the variances
-#    print("Done")
 
 #manipulate data
-
-
-
 ##1) No manipulation
 trainimages = trainimages_
 testimages = testimages_
@@ -68,10 +62,7 @@ trainoutput = trainoutput_
 testoutput = testoutput_
     
 
-
-
-
-##3) Train on only the first s images in your total training data
+##2) Train on only the first s images in your total training data
 # s = 3300
 # trainimages = trainimages_[0:s,:,:]
 # trainoutput = trainoutput_[0:s]
@@ -99,7 +90,7 @@ def skill(yp,yt):
 
 
 
-#initialie arrays
+#initialise arrays
 cost_array = np.array([])
 cost_test_array = np.array([])
 skill_array = np.array([])
