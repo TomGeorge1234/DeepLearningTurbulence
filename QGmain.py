@@ -6,7 +6,6 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
-from eofs.standard import Eof
 from time import time
 import sys 
 sys.path.append('./networks/')
@@ -14,8 +13,8 @@ sys.path.append('./networks/')
 
 
 #USER INPUT VARIABLES
-from NET1c2f import neuralnetwork #NET------ file contains the neural net architecture
-savekey = '1c2f'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results aren saved under with warning to prevent accidental overwrite
+from NET2c2f_light import neuralnetwork #NET------ file contains the neural net architecture
+savekey = '2c2f_light'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results are saved under with warning to prevent accidental overwrite
 flux = "PSI2"  #flux to learn, probably PSI2 (unfiltered) or PSI2_f (filtered)
 field = "PSI1"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
 
