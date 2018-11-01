@@ -109,100 +109,101 @@ def linearly_regressed(yp,yt):
 
 #phase space plot 
 
-def moving_average(data_set, periods=3):
-    weights = np.ones(periods) / periods
-    return np.convolve(data_set, weights, mode='valid')
-
-flux_std = np.std(np.load("./data256_4000/" + "fluxes/PSI2" + ".npz").items()[0][1]) 
-
-path = '/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/arrays/outfilenoimages'
-
-R1 = 1 - ((np.min(np.load(path + '330.npz').items()[5][1]))**0.5)/flux_std
-R2 = 1 - ((np.min(np.load(path + '1000.npz').items()[5][1]))**0.5)/flux_std
-R3 = 1 - ((np.min(np.load(path + '3300.npz').items()[5][1]))**0.5)/flux_std
-R4 = 1 - ((np.min(np.load(path + '10000.npz').items()[5][1]))**0.5)/flux_std
-R5 = 1 - ((np.min(np.load(path + '18000.npz').items()[5][1]))**0.5)/flux_std
-R6 = 1 - ((np.min(np.load(path + '33000.npz').items()[5][1]))**0.5)/flux_std
-R7 = 1 - ((np.min(np.load(path + '56000.npz').items()[5][1]))**0.5)/flux_std
-R8 = 1 - ((np.min(np.load(path + '115200.npz').items()[5][1]))**0.5)/flux_std
-
-R1_ = 1 - ((np.min(moving_average(np.load(path + '330.npz').items()[4][1],192)))**0.5)/flux_std
-R2_ = 1 - ((np.min(moving_average(np.load(path + '1000.npz').items()[4][1],192)))**0.5)/flux_std
-R3_ = 1 - ((np.min(moving_average(np.load(path + '3300.npz').items()[4][1],192)))**0.5)/flux_std
-R4_ = 1 - ((np.min(moving_average(np.load(path + '10000.npz').items()[4][1],192)))**0.5)/flux_std
-R5_ = 1 - ((np.min(moving_average(np.load(path + '18000.npz').items()[4][1],192)))**0.5)/flux_std
-R6_ = 1 - ((np.min(moving_average(np.load(path + '33000.npz').items()[4][1],192)))**0.5)/flux_std
-R7_ = 1 - ((np.min(moving_average(np.load(path + '56000.npz').items()[4][1],192)))**0.5)/flux_std
-R8_ = 1 - ((np.min(moving_average(np.load(path + '115200.npz').items()[4][1],192)))**0.5)/flux_std
-
-
-ax = plt.figure().add_subplot(111)
-y = (R1,R2,R3,R4,R5,R6,R7,R8)
-y_ = (R1_,R2_,R3_,R4_,R5_,R6_,R7_,R8_)
-x = (330,1000,3300,10000,18000,33000,56000,115200)
-plt.scatter(x,y_,marker='.',label="Training")
-plt.plot(x,y_,alpha=0.7)
-plt.scatter(x,y,marker='.',label="Testing")
-plt.plot(x,y,alpha=0.7)
-plt.ylim(-0.15,0.85)
-ax.set_xscale('log')
-plt.xlabel(r'No. training images', fontsize=22)
-plt.ylabel(r'Skill', fontsize = 22)
-plt.legend(fontsize = 16)
-# plt.show()
-plt.savefig("./figures3/phase_space.png", dpi=300, bbox_inches = 'tight',transparent=True)
-
-      
-  
-# skill chart for deeper nets 
 # def moving_average(data_set, periods=3):
 #     weights = np.ones(periods) / periods
 #     return np.convolve(data_set, weights, mode='valid')
 
-
-
 # flux_std = np.std(np.load("./data256_4000/" + "fluxes/PSI2" + ".npz").items()[0][1]) 
 
-# path = '/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/arrays/outfile'
+# path = '/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/arrays/outfilenoimages'
 
-# #calculations of the skills from the costs 
-# S1 = np.max(np.load(path+'1c2f.npz').items()[5][1])
-# S2 = np.max(np.load(path+'2c2f_light.npz').items()[5][1])
-# S3 = np.max(np.load(path+'2c2f.npz').items()[5][1])
-# S4 = np.max(np.load(path+'3c2f_light.npz').items()[5][1])
-# S5 = np.max(np.load(path+'3c2f.npz').items()[5][1])
-# S6 = np.max(np.load(path+'3c2f_heavy.npz').items()[5][1])
-# S7 = np.max(np.load(path+'4c3f.npz').items()[5][1])
-# S8 = np.max(np.load(path+'4c3f_heavy.npz').items()[5][1])
-# S9 = np.max(np.load(path+'5c4f.npz').items()[5][1])
-# S10 = np.max(np.load(path+'6c4f.npz').items()[5][1])
+# R1 = 1 - ((np.min(np.load(path + '330.npz').items()[5][1]))**0.5)/flux_std
+# R2 = 1 - ((np.min(np.load(path + '1000.npz').items()[5][1]))**0.5)/flux_std
+# R3 = 1 - ((np.min(np.load(path + '3300.npz').items()[5][1]))**0.5)/flux_std
+# R4 = 1 - ((np.min(np.load(path + '10000.npz').items()[5][1]))**0.5)/flux_std
+# R5 = 1 - ((np.min(np.load(path + '18000.npz').items()[5][1]))**0.5)/flux_std
+# R6 = 1 - ((np.min(np.load(path + '33000.npz').items()[5][1]))**0.5)/flux_std
+# R7 = 1 - ((np.min(np.load(path + '56000.npz').items()[5][1]))**0.5)/flux_std
+# R8 = 1 - ((np.min(np.load(path + '115200.npz').items()[5][1]))**0.5)/flux_std
 
-# S1_ = np.max(moving_average(np.load(path+'1c2f.npz').items()[4][1],192))
-# S2_ = np.max(moving_average(np.load(path+'2c2f.npz').items()[4][1],192))
-# S3_ = np.max(moving_average(np.load(path+'2c2f.npz').items()[4][1],192))
-# S4_ = np.max(moving_average(np.load(path+'3c2f_light.npz').items()[4][1],192))
-# S5_ = np.max(moving_average(np.load(path+'3c2f.npz').items()[4][1],192))
-# S6_ = np.max(moving_average(np.load(path+'3c2f_heavy.npz').items()[4][1],192))
-# S7_ = np.max(moving_average(np.load(path+'4c3f.npz').items()[4][1],192))
-# S8_ = np.max(moving_average(np.load(path+'4c3f_heavy.npz').items()[4][1],192))
-# S9_ = np.max(moving_average(np.load(path+'5c4f.npz').items()[4][1],192))
-# S10_ = np.max(moving_average(np.load(path+'6c4f.npz').items()[4][1],192))
+# R1_ = 1 - ((np.min(moving_average(np.load(path + '330.npz').items()[4][1],160)))**0.5)/flux_std
+# R2_ = 1 - ((np.min(moving_average(np.load(path + '1000.npz').items()[4][1],160)))**0.5)/flux_std
+# R3_ = 1 - ((np.min(moving_average(np.load(path + '3300.npz').items()[4][1],160)))**0.5)/flux_std
+# R4_ = 1 - ((np.min(moving_average(np.load(path + '10000.npz').items()[4][1],160)))**0.5)/flux_std
+# R5_ = 1 - ((np.min(moving_average(np.load(path + '18000.npz').items()[4][1],160)))**0.5)/flux_std
+# R6_ = 1 - ((np.min(moving_average(np.load(path + '33000.npz').items()[4][1],160)))**0.5)/flux_std
+# R7_ = 1 - ((np.min(moving_average(np.load(path + '56000.npz').items()[4][1],160)))**0.5)/flux_std
+# R8_ = 1 - ((np.min(moving_average(np.load(path + '115200.npz').items()[4][1],160)))**0.5)/flux_std
+
 
 # ax = plt.figure().add_subplot(111)
-# y = (S1,S2,S3,S4,S5,S6,S7,S8,S9,S10)
-# y_ = (S1_,S2_,S3_,S4_,S5_,S6_,S7_,S8_,S9_,S10_)
-# x = (26161,33161,40901,56866,87525,179167,245282,397823,538989,1000355)
+# y = (R1,R2,R3,R4,R5,R6,R7,R8)
+# y_ = (R1_,R2_,R3_,R4_,R5_,R6_,R7_,R8_)
+# x = (330,1000,3300,10000,18000,33000,56000,115200)
 # plt.scatter(x,y_,marker='.',label="Training")
 # plt.plot(x,y_,alpha=0.7)
 # plt.scatter(x,y,marker='.',label="Testing")
 # plt.plot(x,y,alpha=0.7)
-# plt.ylim(0.2,0.5)
+# plt.ylim(-0.15,0.85)
 # ax.set_xscale('log')
-# plt.xlabel(r'Complexity (No. trainable parameters)', fontsize=22)
+# plt.xlabel(r'No. training images', fontsize=22)
 # plt.ylabel(r'Skill', fontsize = 22)
 # plt.legend(fontsize = 16)
 # # plt.show()
-# plt.savefig("./figures3/depth_skill.png", dpi=300, bbox_inches = 'tight',transparent=True)
+# plt.savefig("./figures3/phase_space.png", dpi=300, bbox_inches = 'tight',transparent=True)
+
+      
+  
+# skill chart for deeper nets 
+def moving_average(data_set, periods=3):
+    weights = np.ones(periods) / periods
+    return np.convolve(data_set, weights, mode='valid')
+
+
+
+flux_std = np.std(np.load("./data256_4000/" + "fluxes/PSI2" + ".npz").items()[0][1]) 
+
+path = '/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/arrays/outfile'
+
+#calculations of the skills from the costs 
+S1 = np.mean(np.load(path+'1c2f.npz').items()[5][1][-34:])
+S2 = np.mean(np.load(path+'2c2f_light.npz').items()[5][1][-34:])
+S3 = np.mean(np.load(path+'2c2f.npz').items()[5][1][-34:])
+S4 = np.mean(np.load(path+'3c2f_light.npz').items()[5][1][-34:])
+S5 = np.mean(np.load(path+'3c2f.npz').items()[5][1][-34:])
+S6 = np.mean(np.load(path+'3c2f_heavy.npz').items()[5][1][-34:])
+S7 = np.mean(np.load(path+'4c3f.npz').items()[5][1][-34:])
+S8 = np.mean(np.load(path+'4c3f_heavy.npz').items()[5][1][-34:])
+S9 = np.mean(np.load(path+'5c4f.npz').items()[5][1][-34:])
+S10 = np.mean(np.load(path+'6c4f.npz').items()[5][1][-34:])
+
+S1_ = np.mean(moving_average(np.load(path+'1c2f.npz').items()[4][1],160)[-3400:])
+S2_ = np.mean(moving_average(np.load(path+'2c2f.npz').items()[4][1],160)[-3400:])
+S3_ = np.mean(moving_average(np.load(path+'2c2f.npz').items()[4][1],160)[-3400:])
+S4_ = np.mean(moving_average(np.load(path+'3c2f_light.npz').items()[4][1],160)[-3400:])
+S5_ = np.mean(moving_average(np.load(path+'3c2f.npz').items()[4][1],160)[-3400:])
+S6_ = np.mean(moving_average(np.load(path+'3c2f_heavy.npz').items()[4][1],160)[-3400:])
+S7_ = np.mean(moving_average(np.load(path+'4c3f.npz').items()[4][1],160)[-3400:])
+S8_ = np.mean(moving_average(np.load(path+'4c3f_heavy.npz').items()[4][1],160)[-3400:])
+S9_ = np.mean(moving_average(np.load(path+'5c4f.npz').items()[4][1],160)[-3400:])
+S10_ = np.mean(moving_average(np.load(path+'6c4f.npz').items()[4][1],160)[-3400:])
+
+
+ax = plt.figure().add_subplot(111)
+y = (S1,S2,S3,S4,S5,S6,S7,S8,S9,S10)
+y_ = (S1_,S2_,S3_,S4_,S5_,S6_,S7_,S8_,S9_,S10_)
+x = (26161,33161,40901,56866,87525,179167,245282,397823,538989,1000355)
+plt.scatter(x,y_,marker='.',label="Training")
+plt.plot(x,y_,alpha=0.7)
+plt.scatter(x,y,marker='.',label="Testing")
+plt.plot(x,y,alpha=0.7)
+plt.ylim(0.15,0.4)
+ax.set_xscale('log')
+plt.xlabel(r'Complexity (No. trainable parameters)', fontsize=22)
+plt.ylabel(r'Skill', fontsize = 22)
+plt.legend(fontsize = 16)
+# plt.show()
+plt.savefig("./figures3/depth_skill.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
 
