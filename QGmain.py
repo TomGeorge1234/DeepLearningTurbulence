@@ -13,8 +13,8 @@ sys.path.append('./networks/')
 
 
 #USER INPUT VARIABLES
-from NET2c2f_light import neuralnetwork #NET------ file contains the neural net architecture
-savekey = '2c2f_light'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results are saved under with warning to prevent accidental overwrite
+from NET3c2f_superlight import neuralnetwork #NET------ file contains the neural net architecture
+savekey = '1c2f_superlight'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results are saved under with warning to prevent accidental overwrite
 flux = "PSI2"  #flux to learn, probably PSI2 (unfiltered) or PSI2_f (filtered)
 field = "PSI1"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
 
@@ -62,7 +62,7 @@ testoutput = testoutput_
     
 
 ##2) Train on only the first s images in your total training data
-# s = 3300
+# s = 33000
 # trainimages = trainimages_[0:s,:,:]
 # trainoutput = trainoutput_[0:s]
 # testimages = testimages_
