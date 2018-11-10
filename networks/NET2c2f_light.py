@@ -1,7 +1,7 @@
 import tensorflow as tf 
 
 
-#parameters 33161
+#parameters 29291
     
 #the network 
 def neuralnetwork(x):
@@ -33,8 +33,8 @@ def neuralnetwork(x):
         y_pool4 = max_pool_2x2(y_pool3)
 
     with tf.name_scope('fc1'):
-        W_fc1 = weight_variable([4 * 4 * 16, 120])
-        B_fc1 = bias_variable([120])
+        W_fc1 = weight_variable([4 * 4 * 16, 105])
+        B_fc1 = bias_variable([105])
         y_pool4_flat = tf.reshape(y_pool4, [-1, 4*4*16])
         y_fc1 = tf.nn.relu(tf.matmul(y_pool4_flat, W_fc1) + B_fc1)
         
@@ -43,7 +43,7 @@ def neuralnetwork(x):
         y_fc1_drop = tf.nn.dropout(y_fc1, keep_prob)
 
     with tf.name_scope('fc2'):
-        W_fc2 = weight_variable([120, 1])
+        W_fc2 = weight_variable([105, 1])
         B_fc2 = bias_variable([1])
         y_fc2 = tf.matmul(y_fc1_drop, W_fc2) + B_fc2
         

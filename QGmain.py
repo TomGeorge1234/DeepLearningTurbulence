@@ -13,8 +13,8 @@ sys.path.append('./networks/')
 
 
 #USER INPUT VARIABLES
-from NET3c2f_superlight import neuralnetwork #NET------ file contains the neural net architecture
-savekey = '1c2f_superlight'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results are saved under with warning to prevent accidental overwrite
+from NET4c3f_heavy import neuralnetwork #NET------ file contains the neural net architecture
+savekey = '4c3f_heavy'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results are saved under with warning to prevent accidental overwrite
 flux = "PSI2"  #flux to learn, probably PSI2 (unfiltered) or PSI2_f (filtered)
 field = "PSI1"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
 

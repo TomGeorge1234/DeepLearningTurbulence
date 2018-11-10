@@ -90,13 +90,15 @@ def save_flux(flux,name,filtering=False,slicing=True,include_shift=False):
 
 
 #Save data to file 
-    
-# save_field(field='PSI1',name='PSI1_double',filtering=False,slicing=True,include_shift=True)
+
+
+save_field(field='U1',name='U1',filtering=False,slicing=True,include_shift=False)
+save_field(field='U2',name='U2',filtering=False,slicing=True,include_shift=False)
 # save_field(field='PSI2',name='PSI2',filtering=False,slicing=True)
 # save_field(field='PV2',name='PV2',filtering=False,slicing=True)
 
 
-save_flux(flux='PSI2',name='PSI2_double',filtering=False,slicing=True,include_shift=True)
+# save_flux(flux='PSI2',name='PSI2_double',filtering=False,slicing=True,include_shift=True)
 # save_flux(flux='PSI2',name='PSI2',filtering=False,slicing=True)
 # save_flux(flux='PV1',name='PV1_f',filtering=True,slicing=True)
 # save_flux(flux='PSI2',name='PSI2_f',filtering=True,slicing=True)
