@@ -173,53 +173,53 @@ def moving_average(data_set, periods=3):
 
 #phase space plot 
 
-# def moving_average(data_set, periods=3):
-#     weights = np.ones(periods) / periods
-#     return np.convolve(data_set, weights, mode='valid')
+def moving_average(data_set, periods=3):
+    weights = np.ones(periods) / periods
+    return np.convolve(data_set, weights, mode='valid')
 
-# flux_std = np.std(np.load("./data256_4000/" + "fluxes/PSI2" + ".npz").items()[0][1]) 
+flux_std = np.std(np.load("./data256_4000/" + "fluxes/PSI2" + ".npz").items()[0][1]) 
 
-# path = '/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/arrays/outfilenoimages'
+path = '/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/arrays/outfilenoimages'
 
-# R1 = np.mean(np.load(path + '330.npz').items()[5][1][-1:])
-# R2 = np.mean(np.load(path + '1000.npz').items()[5][1][-1:])
-# R3 = np.mean(np.load(path + '3300.npz').items()[5][1][-1:])
-# R4 = np.mean(np.load(path + '10000.npz').items()[5][1][-3:])
-# R5 = np.mean(np.load(path + '18000.npz').items()[5][1][-5:])
-# R6 = np.mean(np.load(path + '33000.npz').items()[5][1][-10:])
-# R7 = np.mean(np.load(path + '56000.npz').items()[5][1][-17:])
-# R8 = np.mean(np.load(path +'112000.npz').items()[5][1][-34:])
-# R9 = np.mean(np.load(path + '224000.npz').items()[5][1][-67:])
+R1 = np.mean(np.load(path + '330.npz').items()[5][1][-1:])
+R2 = np.mean(np.load(path + '1000.npz').items()[5][1][-1:])
+R3 = np.mean(np.load(path + '3300.npz').items()[5][1][-1:])
+R4 = np.mean(np.load(path + '10000.npz').items()[5][1][-3:])
+R5 = np.mean(np.load(path + '18000.npz').items()[5][1][-5:])
+R6 = np.mean(np.load(path + '33000.npz').items()[5][1][-10:])
+R7 = np.mean(np.load(path + '56000.npz').items()[5][1][-17:])
+R8 = np.mean(np.load(path +'112000.npz').items()[5][1][-34:])
+R9 = np.mean(np.load(path + '224000.npz').items()[5][1][-67:])
 
-# R1_ = np.mean(moving_average(np.load(path + '330.npz').items()[4][1],160)[-10:])
-# R2_ = np.mean(moving_average(np.load(path + '1000.npz').items()[4][1],160)[-30:])
-# R3_ = np.mean(moving_average(np.load(path + '3300.npz').items()[4][1],160)[-99:])
-# R4_ = np.mean(moving_average(np.load(path + '10000.npz').items()[4][1],160)[-300:])
-# R5_ = np.mean(moving_average(np.load(path + '18000.npz').items()[4][1],160)[-540:])
-# R6_ = np.mean(moving_average(np.load(path + '33000.npz').items()[4][1],160)[-990:])
-# R7_ = np.mean(moving_average(np.load(path + '56000.npz').items()[4][1],160)[-1680:])
-# R8_ = np.mean(moving_average(np.load(path + '112000.npz').items()[4][1],160)[-3456:])
-# R9_ = np.mean(moving_average(np.load(path + '224000.npz').items()[4][1],160)[-6720:])
+R1_ = np.mean(moving_average(np.load(path + '330.npz').items()[4][1],160)[-10:])
+R2_ = np.mean(moving_average(np.load(path + '1000.npz').items()[4][1],160)[-30:])
+R3_ = np.mean(moving_average(np.load(path + '3300.npz').items()[4][1],160)[-99:])
+R4_ = np.mean(moving_average(np.load(path + '10000.npz').items()[4][1],160)[-300:])
+R5_ = np.mean(moving_average(np.load(path + '18000.npz').items()[4][1],160)[-540:])
+R6_ = np.mean(moving_average(np.load(path + '33000.npz').items()[4][1],160)[-990:])
+R7_ = np.mean(moving_average(np.load(path + '56000.npz').items()[4][1],160)[-1680:])
+R8_ = np.mean(moving_average(np.load(path + '112000.npz').items()[4][1],160)[-3456:])
+R9_ = np.mean(moving_average(np.load(path + '224000.npz').items()[4][1],160)[-6720:])
 
-# ax = plt.figure().add_subplot(111)
-# fig = plt.gcf()
-# fig.set_size_inches(6,4)
-# y = (R1,R2,R3,R4,R5,R6,R7,R8,R9)
-# y_ = (R1_,R2_,R3_,R4_,R5_,R6_,R7_,R8_,R9_)
-# x = (330,1000,3300,10000,18000,33000,56000,112000,224000)
-# plt.scatter(x,y_,marker='.',label="Training")
-# plt.plot(x,y_,alpha=0.7)
-# plt.scatter(x,y,marker='.',label="Testing")
-# plt.plot(x,y,alpha=0.7)
-# plt.ylim(-0.05,0.95)
-# plt.xlim(150,500000)
-# plt.xticks(fontsize=16)
-# plt.yticks(fontsize=16)
-# ax.set_xscale('log')
-# plt.xlabel(r'No. training images', fontsize=18)
-# plt.ylabel(r'Skill', fontsize = 18)
-# plt.legend(fontsize = 16)
-# # plt.show()
+ax = plt.figure().add_subplot(111)
+fig = plt.gcf()
+fig.set_size_inches(6,4)
+y = (R1,R2,R3,R4,R5,R6,R7,R8,R9)
+y_ = (R1_,R2_,R3_,R4_,R5_,R6_,R7_,R8_,R9_)
+x = (330,1000,3300,10000,18000,33000,56000,112000,224000)
+plt.scatter(x,y_,marker='.',label="Training")
+plt.plot(x,y_,alpha=0.7)
+plt.scatter(x,y,marker='.',label="Testing")
+plt.plot(x,y,alpha=0.7)
+plt.ylim(-0.15,1.05)
+plt.xlim(150,500000)
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
+ax.set_xscale('log')
+plt.xlabel(r'No. training images', fontsize=18)
+plt.ylabel(r'Skill', fontsize = 18)
+plt.legend(fontsize = 16)
+plt.show()
 # plt.savefig("./figures3/phase_space.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
     
@@ -313,11 +313,11 @@ def moving_average(data_set, periods=3):
 
 # flux time series'
   
-flux_nontriv = (np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[1][1]*3*np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[2][1])/(1.2*40*40)
-flux_full = np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[1][1]*3*np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[2][1]
-flux_triv = flux_full - flux_nontriv
-flux_nontriv_recon = (np.load("./arrays/outfile3c2f.npz").items()[2][1]*3*np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[2][1])/(1.2*40*40)
-EKE = np.load("./data256_4000/fluxes/" + "EKE" + ".npz").items()[0][1]
+# flux_nontriv = (np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[1][1]*3*np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[2][1])/(1.2*40*40)
+# flux_full = np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[1][1]*3*np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[2][1]
+# flux_triv = flux_full - flux_nontriv
+# flux_nontriv_recon = (np.load("./arrays/outfile3c2f.npz").items()[2][1]*3*np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[2][1])/(1.2*40*40)
+# EKE = np.load("./data256_4000/fluxes/" + "EKE" + ".npz").items()[0][1]
 
 
 # #1f77b4 blue
@@ -351,18 +351,18 @@ EKE = np.load("./data256_4000/fluxes/" + "EKE" + ".npz").items()[0][1]
 # plt.savefig("./figures3/EKE.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
-fig, ax = plt.subplots(figsize=(15, 4))
-plt.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=0.5, label = r'Truth')
-plt.plot(np.arange(200,600,0.25),flux_nontriv_recon[0:1600],color='#ff7f0e',alpha=1, label = r'Prediction, Skill: %.3f, $R^{2}$: %.2f' %(skill(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv),R_squared(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv)))
-plt.xlabel(r'Days', fontsize=18)
-plt.ylabel(r'Coupled Flux', fontsize=18)
-plt.xticks([200,250,300,350,400,450,500,550,600],fontsize=14)
-plt.yticks([-6,-5,-4,-3,-2,-1,0,1],fontsize=14)
-plt.yticks(fontsize=14)
-plt.yticks(fontsize=14)
-plt.legend(fontsize=14,loc=2)
-# plt.show()
-plt.savefig("./figures3/nontrivrecon.png", dpi=300, bbox_inches = 'tight',transparent=True)
+# fig, ax = plt.subplots(figsize=(15, 4))
+# plt.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=0.5, label = r'Truth')
+# plt.plot(np.arange(200,600,0.25),flux_nontriv_recon[0:1600],color='#ff7f0e',alpha=1, label = r'Prediction, Skill: %.3f, $R^{2}$: %.2f' %(skill(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv),R_squared(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv)))
+# plt.xlabel(r'Days', fontsize=18)
+# plt.ylabel(r'Coupled Flux', fontsize=18)
+# plt.xticks([200,250,300,350,400,450,500,550,600],fontsize=14)
+# plt.yticks([-6,-5,-4,-3,-2,-1,0,1],fontsize=14)
+# plt.yticks(fontsize=14)
+# plt.yticks(fontsize=14)
+# plt.legend(fontsize=14,loc=2)
+# # plt.show()
+# plt.savefig("./figures3/nontrivrecon.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
 
