@@ -13,8 +13,8 @@ sys.path.append('./networks/')
 
 
 #USER INPUT VARIABLES
-from NET4c3f_heavy import neuralnetwork #NET------ file contains the neural net architecture
-savekey = '4c3f_heavy'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results are saved under with warning to prevent accidental overwrite
+from NET3c2f import neuralnetwork #NET------ file contains the neural net architecture
+savekey = '3c2f_overfit'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results are saved under with warning to prevent accidental overwrite
 flux = "PSI2"  #flux to learn, probably PSI2 (unfiltered) or PSI2_f (filtered)
 field = "PSI1"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
 
@@ -124,7 +124,7 @@ def main(_):
         i = 0
         max_idx = 0
         t0 = time()
-        while (i - max_idx*testfreq)*K/len(trainimages) < 3*(115200/len(trainimages)): #terminates training when the accuracy hasn't increased over this many  epochs
+        while (i - max_idx*testfreq)*K/len(trainimages) < 10*(115200/len(trainimages)): #terminates training when the accuracy hasn't increased over this many  epochs
         # while (i/testfreq - max_idx) < 5: #terminates training when it hasnt improved in the last 5 testing iterations 
 
             is_training = True
@@ -186,23 +186,23 @@ def main(_):
                 #skill function
                 plt.subplot(223)
                 if i<0.5*len(trainimages)/K:
-                    plt.plot(np.arange(i)*K/len(trainimages),skill_array[:i],label="Training")
+                    plt.plot(np.arange(i)*K/len(trainimages),skill_array[:i],label="Training",linewidth=0.3)
                     plt.plot(np.arange(int(i/testfreq)+1)*testfreq*K/len(trainimages),skill_test_array[:int(i/testfreq)+1],label="Testing")
                 elif i<3*len(trainimages)/K:
-                    plt.plot(np.arange(int(i-0.5*len(trainimages)/K),i)*K/len(trainimages),skill_array[int(i-0.5*len(trainimages)/K):i],label="Training")
+                    plt.plot(np.arange(int(i-0.5*len(trainimages)/K),i)*K/len(trainimages),skill_array[int(i-0.5*len(trainimages)/K):i],label="Training",linewidth=0.3)
                     plt.plot(np.arange(int((i-0.5*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),skill_test_array[int((i-0.5*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")
                 else:
-                    plt.plot(np.arange(int(i-3*len(trainimages)/K),i)*K/len(trainimages),skill_array[int(i-3*len(trainimages)/K):i],label="Training")
+                    plt.plot(np.arange(int(i-3*len(trainimages)/K),i)*K/len(trainimages),skill_array[int(i-3*len(trainimages)/K):i],label="Training",linewidth=0.3)
                     plt.plot(np.arange(int((i-3*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),skill_test_array[int((i-3*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")
                 plt.xlabel("Epochs"); plt.ylabel("Skill")
 
                 #R plot
                 plt.subplot(224)
                 if i<3*len(trainimages)/K:
-                    plt.plot(np.arange(i)*K/len(trainimages),accuracy_array[:i],label="Training")
+                    plt.plot(np.arange(i)*K/len(trainimages),accuracy_array[:i],label="Training",linewidth=0.3)
                     plt.plot(np.arange(int(i/testfreq)+1)*testfreq*K/len(trainimages),accuracy_test_array[:int(i/testfreq)+1],label="Testing")
                 else:
-                    plt.plot(np.arange(int(i-3*len(trainimages)/K),i)*K/len(trainimages),accuracy_array[int(i-3*len(trainimages)/K):i],label="Training")
+                    plt.plot(np.arange(int(i-3*len(trainimages)/K),i)*K/len(trainimages),accuracy_array[int(i-3*len(trainimages)/K):i],label="Training",linewidth=0.3)
                     plt.plot(np.arange(int((i-3*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),accuracy_test_array[int((i-3*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")
                 plt.xlabel("Epochs"); plt.ylabel("R")
 

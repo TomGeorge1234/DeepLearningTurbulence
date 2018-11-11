@@ -56,7 +56,7 @@ def neuralnetwork(x,is_training=True):
     if is_training == True:    
         return y_fc2, keep_prob
     elif is_training == False: 
-        return x, y_pool1, y_conv1, y_pool2, y_conv2, y_pool3, y_conv3, y_pool4
+        return x, y_pool1, y_conv1, y_pool2, y_conv2, y_pool3, y_conv3, y_pool4, W_conv1
 
 #define variables and functions 
 def weight_variable(shape):
