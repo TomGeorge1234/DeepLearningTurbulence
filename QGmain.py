@@ -13,8 +13,8 @@ sys.path.append('./networks/')
 
 
 #USER INPUT VARIABLES
-from NET3c2f import neuralnetwork #NET------ file contains the neural net architecture
-savekey = '3c2f_overfit'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results are saved under with warning to prevent accidental overwrite
+from NET3c2f_batchnorm import neuralnetwork #NET------ file contains the neural net architecture
+savekey = 'batchnorm'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results are saved under with warning to prevent accidental overwrite
 flux = "PSI2"  #flux to learn, probably PSI2 (unfiltered) or PSI2_f (filtered)
 field = "PSI1"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
 
@@ -23,7 +23,7 @@ field = "PSI1"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
 #SOME GLOBAL VARIABLES
 eps = 1e-3 #adamoptimizer learning rate
 K = 100 #learning batch size
-reload_data = True #if data is already loaded, save time by setting False
+reload_data = False #if data is already loaded, save time by setting False
 testfreq = 100 #how often testing is done 
 drop_prob = 0.7 #this is the keep-probability
 data_path = './data256_4000/'
@@ -124,7 +124,7 @@ def main(_):
         i = 0
         max_idx = 0
         t0 = time()
-        while (i - max_idx*testfreq)*K/len(trainimages) < 10*(115200/len(trainimages)): #terminates training when the accuracy hasn't increased over this many  epochs
+        while (i - max_idx*testfreq)*K/len(trainimages) < 3*(115200/len(trainimages)): #terminates training when the accuracy hasn't increased over this many  epochs
         # while (i/testfreq - max_idx) < 5: #terminates training when it hasnt improved in the last 5 testing iterations 
 
             is_training = True

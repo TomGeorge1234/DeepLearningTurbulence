@@ -207,18 +207,18 @@ def moving_average(data_set, periods=3):
 # y = (R1,R2,R3,R4,R5,R6,R7,R8,R9)
 # y_ = (R1_,R2_,R3_,R4_,R5_,R6_,R7_,R8_,R9_)
 # x = (330,1000,3300,10000,18000,33000,56000,112000,224000)
-# plt.scatter(x,y_,marker='.',label="Training")
+# plt.scatter(x,y_,marker='o',s=10,edgecolors='#1f77b4',label="Training")
 # plt.plot(x,y_,alpha=0.7)
-# plt.scatter(x,y,marker='.',label="Testing")
+# plt.scatter(x,y,marker='o',s=10,edgecolors='#ff7f0e',label="Testing")
 # plt.plot(x,y,alpha=0.7)
 # plt.ylim(-0.15,1.05)
-# plt.xlim(150,500000)
+# plt.xlim(10**2,10**6)
 # plt.xticks(fontsize=16)
 # plt.yticks(fontsize=16)
 # ax.set_xscale('log')
 # plt.xlabel(r'No. training images', fontsize=18)
 # plt.ylabel(r'Skill', fontsize = 18)
-# plt.legend(fontsize = 16)
+# plt.legend(fontsize = 16, frameon=False)
 # # plt.show()
 # plt.savefig("./figures3/phase_space.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
@@ -283,9 +283,9 @@ def moving_average(data_set, periods=3):
 # y_ = (S1_,S2_,S3_,S6_,S7_,S8_,S9_,S11_)
 # # x = (5349,20937,26161,30183,29291,40901,56866,87525,179167,245282,397823,538989,1000355)
 # x = (5349,20937,26161,40901,56866,87525,179167,397823)
-# plt.scatter(x,y_,marker='.',label="Training")
+# plt.scatter(x,y_,marker='o',s=10,edgecolors='#1f77b4',label="Training")
 # plt.plot(x,y_,alpha=0.7)
-# plt.scatter(x,y,marker='.',label="Testing")
+# plt.scatter(x,y,marker='o',s=10,edgecolors='#ff7f0e',label="Testing")
 # plt.plot(x,y,alpha=0.7)
 # plt.ylim(-0.05,0.45)
 # plt.xlim(3000,1000000)
@@ -294,7 +294,7 @@ def moving_average(data_set, periods=3):
 # ax.set_xscale('log')
 # plt.xlabel(r'CNN Complexity (No. trainable parameters)', fontsize=18)
 # plt.ylabel(r'Skill', fontsize = 18)
-# plt.legend(fontsize = 16)
+# plt.legend(fontsize = 16,frameon=False)
 # # plt.show()
 # plt.savefig("./figures3/depth_skill.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
@@ -319,54 +319,55 @@ flux_triv = flux_full - flux_nontriv
 flux_nontriv_recon = (np.load("./arrays/outfile3c2f.npz").items()[2][1]*3*np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[2][1])/(1.2*40*40)
 EKE = np.load("./data256_4000/fluxes/" + "EKE" + ".npz").items()[0][1]
 
-flux_nontriv = (flux_nontriv-np.mean(flux_nontriv))/np.std(flux_nontriv)
-flux_nontriv_recon = (flux_nontriv_recon-np.mean(flux_nontriv_recon))/np.std(flux_nontriv_recon)
-EKE = (EKE - np.mean(EKE))/np.std(EKE)
+# flux_nontriv = (flux_nontriv-np.mean(flux_nontriv))/np.std(flux_nontriv)
+# flux_nontriv_recon = linearly_regressed(flux_nontriv_recon,flux_nontriv)
+# EKE = (EKE - np.mean(EKE))/np.std(EKE)
 
 # # #1f77b4 blue
 # # # 2ca02c green
 # # # d62728 red
 # # # ff7f0e orange
 
-fig, ax1 = plt.subplots(figsize=(8, 4))
-ax1.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=1)
-ax1.set_xlabel(r'Days', fontsize=18)
-ax1.set_ylabel(r'Coupled Flux', fontsize=18, color = '#ff7f0e')
-ax1.tick_params('y',colors='#ff7f0e',labelsize=16)
-ax1.tick_params('x',labelsize=16)
-ax1.set_ylim([-3,3])
-ax2 = ax1.twinx()
-ax2.plot(np.arange(200,600,0.25),EKE[0:1600],color='#d62728',alpha=1)
-ax2.set_ylabel(r'Eddy Kinetic Energy', fontsize=18, color='#d62728')
-ax2.tick_params('y',colors='#d62728',labelsize=16)
-ax2.set_ylim([-2.5,2.5])
-plt.xticks([200,300,400,500,600])
+# fig, ax1 = plt.subplots(figsize=(8, 4))
+# ax1.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=1)
+# ax1.set_xlabel(r'Days', fontsize=18)
+# ax1.set_ylabel(r'Coupled Flux', fontsize=18, color = '#ff7f0e')
+# ax1.tick_params('y',colors='#ff7f0e',labelsize=16)
+# ax1.tick_params('x',labelsize=16)
+# ax1.set_ylim([-3,3])
+# ax2 = ax1.twinx()
+# ax2.plot(np.arange(200,600,0.25),EKE[0:1600],color='#d62728',alpha=1)
+# ax2.set_ylabel(r'Eddy Kinetic Energy', fontsize=18, color='#d62728')
+# ax2.tick_params('y',colors='#d62728',labelsize=16)
+# ax2.set_ylim([-2.5,2.5])
+# plt.xticks([200,300,400,500,600])
+# # plt.show()
+# plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',transparent=True)
+
+
+fig, ax = plt.subplots(figsize=(6.5, 4))
+plt.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=1)
+plt.xlabel(r'Days', fontsize=17)
+plt.title(r'Eddy Thickness flux', fontsize=17)
+plt.xticks([200,300,400,500,600],fontsize=16)
+plt.yticks(fontsize=16)
+# plt.legend(fontsize=14,loc=2)
+plt.margins(x=0)
 # plt.show()
 plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',transparent=True)
-
-
-# fig, ax = plt.subplots(figsize=(8, 5))
-# plt.plot(np.arange(200,400,0.25),EKE[0:800]/10**9,color='#d62728',alpha=1)
-# plt.xlabel(r'Days', fontsize=18)
-# plt.ylabel(r'EKE (\smallfont{$\times 10^{-9}$})', fontsize=18)
-# plt.xticks([200,250,300,350,400],fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# # plt.legend(fontsize=14,loc=2)
-# # plt.show()
-# plt.savefig("./figures3/EKE.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
 # fig, ax = plt.subplots(figsize=(15, 4))
 # plt.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=0.5, label = r'Truth')
 # plt.plot(np.arange(200,600,0.25),flux_nontriv_recon[0:1600],color='#ff7f0e',alpha=1, label = r'Prediction, Skill: %.3f, $R^{2}$: %.2f' %(skill(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv),R_squared(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv)))
 # plt.xlabel(r'Days', fontsize=18)
-# plt.ylabel(r'Coupled Flux', fontsize=18)
+# plt.ylabel(r'Eddy Thickness Flux', fontsize=18)
 # plt.xticks([200,250,300,350,400,450,500,550,600],fontsize=14)
-# plt.yticks([-2,-1,-0,1,2],fontsize=14)
+# plt.yticks([-6,-5,-4,-3,-2,-1,-0,1],fontsize=14)
 # plt.yticks(fontsize=14)
 # plt.yticks(fontsize=14)
-# plt.legend(fontsize=14,loc=2)
+# plt.legend(fontsize=14,frameon=False,loc=8)
+# plt.margins(x=0)
 # # plt.show()
 # plt.savefig("./figures3/nontrivrecon.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
@@ -374,14 +375,14 @@ plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',tran
 
 # scatter
 # fig, ax = plt.subplots(figsize=(8, 5.3))
-# plt.scatter(flux_nontriv[::5],linearly_regressed(flux_nontriv_recon,flux_nontriv)[::5],marker = '.', s = 1, color='#ff7f0e')
-# plt.plot([-8,2],[-8,2],":",color="black")
+# plt.scatter(flux_nontriv[::5],linearly_regressed(flux_nontriv_recon,flux_nontriv)[::5],marker = '.', s = 1, color='#ff7f0e', label=r'$R^{2} = %.2f$' %R_squared(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv))
+# plt.plot([-6,1],[-6,1],":",color="black")
 # plt.axis([-1,1,-1,1],'equal')
 # plt.xlabel(r"True Flux", fontsize=24); plt.ylabel(r"Predicted Flux", fontsize=24)
 # plt.ylim([-6,1])
 # plt.xlim([-6,1])
-# plt.yticks([-6,-4,-2,0],fontsize=18)
-# plt.xticks([-6,-4,-2,0],fontsize=18)
+# plt.yticks([-6,-5,-4,-3,-2,-1,0,1],fontsize=18)
+# plt.xticks([-6,-5,-4,-3,-2,-1,0,1],fontsize=18)
 
 # fig  = plt.gcf()
 # fwidth = fig.get_figwidth()
@@ -398,8 +399,7 @@ plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',tran
 #     bb.y0 += shrink_by / 2
 #     bb.y1 -= shrink_by / 2
 # ax.set_position(bb)
-
-# ax.text(0.05, 0.95, r'$R^{2} = %.2f$' %R_squared(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv), verticalalignment='top', horizontalalignment='left', transform=ax.transAxes, fontsize=18)
+# plt.legend(frameon=False, fontsize = 20,loc=2)
 
 # # plt.show()
 # plt.savefig("./figures3/fluxscatter.png", dpi=300, bbox_inches = 'tight', transparent=True)
@@ -420,7 +420,7 @@ plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',tran
 # EKE = np.load("./data256_4000/fluxes/" + "EKE" + ".npz").items()[0][1][:1000]
 # flux_full = np.reshape(np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[1][1],(-1))[:1000]
 # flux_nontriv = np.reshape(np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[1][1],(-1))[:1000]
-# PSI2 = np.load("./data256_4000/fields/" + "PSI2" + ".npz").items()[1][1][:1000]
+# PSI1 = np.load("./data256_4000/fields/" + "PSI1" + ".npz").items()[1][1][:1000]
 
 
 # #this shift function rolls the data around the x axis by 1 i.e. shift([a,b,c,d]) = [d,a,b,c] therefore d_arrray/dx = (array - shift(array))/dx
@@ -463,14 +463,19 @@ plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',tran
 #         R[i] = stats.mstats.linregress(x1,y1)[2]
 #     return R
 
+# def snapshot_autocorrelate(x,number):
+#     R = np.zeros(number)
+#     for i in range(number):
+#         x1 = x[0]
+#         y1 = x[i]
+#         R[i] = stats.mstats.linregress(x1,y1)[2]
+#     return R 
+
 
 
 # fullautocorrelation = lag_correlate(flux_full,flux_full,400)
 # coupledautocorrelation = lag_correlate(flux_nontriv,flux_nontriv,400)
-# PSI2autocorrelation = lag_correlate(PSI2,PSI2,400)
-# EKEfullcorrelation =  lag_correlate(flux_full,EKE,400)
-# EKEcoupledcorrelation =  lag_correlate(flux_nontriv,EKE,400)
-# # DEKEDtcoupledcorrelation = lag_correlate(flux_nontriv[1:],DEKEDt,400)
+# PSI1autocorrelation = snapshot_autocorrelate(PSI1,400)
 
 
 # # # #1f77b4 blue
@@ -478,15 +483,33 @@ plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',tran
 # # # # d62728 red
 # # # # ff7f0e orange
 
-# fig, ax = plt.subplots(figsize=(8, 4))
-# plt.plot(np.arange(0,60,0.25),coupledautocorrelation[:240],color='#ff7f0e',alpha=1,label=r'Coupled PV Flux $\bigotimes$ Coupled PV Flux')
-# plt.plot(np.arange(0,60,0.25),PSI2autocorrelation[:240],color='#2ca02c',alpha=1,label=r'PSI2 snapshots $\bigotimes$ PSI2 snapshots')
-# plt.plot(np.arange(0,60,0.25),EKEfullcorrelation[:240],color='#d62728',alpha=1,label=r'Full PV $\bigotimes$ EKE')
-# plt.xlabel(r'Lag days', fontsize=18)
-# plt.ylabel(r'Corrrelation coefficient', fontsize=18)
-# plt.xticks([0,10,20,30,40,50,60],fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.legend(fontsize=12)
+# fig, ax = plt.subplots(figsize=(5, 5))
+# plt.plot(np.arange(0,50,0.25),coupledautocorrelation[:200],color='#ff7f0e',alpha=1,label=r'Eddy thickness flux')
+# plt.plot(np.arange(0,50,0.25),PSI1autocorrelation[:200],color='#2ca02c',alpha=1,label=r'$\psi_{1}$ Snapshots')
+# # plt.plot(np.arange(0,60,0.25),EKEfullcorrelation[:240],color='#d62728',alpha=1,label=r'Full PV $\bigotimes$ EKE')
+# plt.xlabel(r'Lag days', fontsize=20)
+# plt.title(r'Autocorrrelation', fontsize=20)
+# plt.xticks([0,10,20,30,40,50],fontsize=18)
+# plt.yticks(fontsize=18)
+# plt.legend(fontsize=16,frameon=False)
+# plt.margins(x=0)
+
+# fig  = plt.gcf()
+# fwidth = fig.get_figwidth()
+# fheight = fig.get_figheight()
+# bb = ax.get_position()
+# axwidth = fwidth * (bb.x1 - bb.x0)
+# axheight = fheight * (bb.y1 - bb.y0)
+# if axwidth > axheight:
+#     narrow_by = (axwidth - axheight) / fwidth
+#     bb.x0 += narrow_by / 2
+#     bb.x1 -= narrow_by / 2
+# elif axheight > axwidth:
+#     shrink_by = (axheight - axwidth) / fheight
+#     bb.y0 += shrink_by / 2
+#     bb.y1 -= shrink_by / 2
+# ax.set_position(bb)
+
 # # plt.show()
 # plt.savefig("./figures3/correlations.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
@@ -522,7 +545,7 @@ plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',tran
 # # plt.yticks([-8,-6,-4,-2,0,2,4,6,8,10],fontsize=14)
 # plt.yticks(fontsize=18)
 # plt.xticks([10**-2,10**-1,10**0],fontsize=18)
-# plt.legend(fontsize=18)
+# plt.legend(fontsize=18,frameon=False)
 # plt.xlim([10**-2,0.6])
 
 # fig  = plt.gcf()
@@ -564,6 +587,8 @@ plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',tran
 #Histogram
 # flux_nontriv = np.reshape((np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[1][1]*3*np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[2][1])/(1.2*40*40),(-1))
 # flux_nontriv_recon = np.reshape((np.load("./arrays/outfile3c2f.npz").items()[2][1]*3*np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[2][1])/(1.2*40*40),(-1))
+# # flux_nontriv = (flux_nontriv-np.mean(flux_nontriv))/np.std(flux_nontriv)
+# # flux_nontriv_recon = linearly_regressed(flux_nontriv_recon,flux_nontriv)
 
 # fig, ax = plt.subplots(figsize=(8, 5.33))
 
@@ -598,7 +623,7 @@ plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',tran
 
 # plt.xticks(fontsize=18)
 # plt.yticks(fontsize=18)
-# plt.legend(fontsize=18)
+# plt.legend(fontsize=18,frameon=False,loc=2)
 # # plt.show()
 # plt.savefig("./figures3/histogram.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
@@ -623,14 +648,15 @@ plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',tran
 # #1f77b4
 # # 2ca02c
 # # ff7f0e orange
-# fig, ax = plt.subplots(figsize=(7, 5))
+# fig, ax = plt.subplots(figsize=(7.5, 5))
 # plt.plot(training_epochs,training_skill,color='#1f77b4',alpha=1,label=r'Training data', linewidth = 0.7 )
 # plt.plot(testing_epochs,testing_skill,color='#ff7f0e',alpha=1,label=r'Testing data', linewidth = 2 )
 # plt.xlabel(r'Epochs', fontsize=22)
 # plt.ylabel(r'Skill', fontsize=22)
 # plt.xticks([0,4,8,12,16,20,24],fontsize=18)
 # plt.yticks(fontsize=18)
-# plt.legend(fontsize=18)
+# plt.legend(fontsize=18,frameon=False)
+# plt.margins(x=0)
 # # plt.show()
 # plt.savefig("./figures3/training.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
