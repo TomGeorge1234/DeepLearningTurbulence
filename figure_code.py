@@ -173,13 +173,13 @@ def moving_average(data_set, periods=3):
 
 #phase space plot 
 
-# def moving_average(data_set, periods=3):
-#     weights = np.ones(periods) / periods
-#     return np.convolve(data_set, weights, mode='valid')
+def moving_average(data_set, periods=3):
+    weights = np.ones(periods) / periods
+    return np.convolve(data_set, weights, mode='valid')
 
-# flux_std = np.std(np.load("./data256_4000/" + "fluxes/PSI2" + ".npz").items()[0][1]) 
+flux_std = np.std(np.load("./data256_4000/" + "fluxes/PSI2" + ".npz").items()[0][1]) 
 
-# path = '/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/arrays/outfilenoimages'
+path = '/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/arrays/outfilenoimages'
 
 # R1 = np.mean(np.load(path + '330.npz').items()[5][1][-1:])
 # R2 = np.mean(np.load(path + '1000.npz').items()[5][1][-1:])
@@ -188,7 +188,7 @@ def moving_average(data_set, periods=3):
 # R5 = np.mean(np.load(path + '18000.npz').items()[5][1][-5:])
 # R6 = np.mean(np.load(path + '33000.npz').items()[5][1][-10:])
 # R7 = np.mean(np.load(path + '56000.npz').items()[5][1][-17:])
-# R8 = np.mean(np.load(path +'112000.npz').items()[5][1][-34:])
+R8 = np.mean(np.load(path +'112000.npz').items()[5][1][-34:])
 # R9 = np.mean(np.load(path + '224000.npz').items()[5][1][-67:])
 
 # R1_ = np.mean(moving_average(np.load(path + '330.npz').items()[4][1],160)[-10:])
@@ -311,13 +311,14 @@ def moving_average(data_set, periods=3):
 
 
 
-# flux time series'
+# # flux time series'
   
 flux_nontriv = (np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[1][1]*3*np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[2][1])/(1.2*40*40)
-flux_full = np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[1][1]*3*np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[2][1]
-flux_triv = flux_full - flux_nontriv
+# flux_full = np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[1][1]*3*np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[2][1]
+# flux_triv = flux_full - flux_nontriv
 flux_nontriv_recon = (np.load("./arrays/outfile3c2f.npz").items()[2][1]*3*np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[2][1])/(1.2*40*40)
-EKE = np.load("./data256_4000/fluxes/" + "EKE" + ".npz").items()[0][1]
+# flux_nontriv_recon = (np.load("./arrays/outfileduplicate_outliers.npz").items()[2][1]*3*np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[2][1])/(1.2*40*40)
+# EKE = np.load("./data256_4000/fluxes/" + "EKE" + ".npz").items()[0][1]
 
 # flux_nontriv = (flux_nontriv-np.mean(flux_nontriv))/np.std(flux_nontriv)
 # flux_nontriv_recon = linearly_regressed(flux_nontriv_recon,flux_nontriv)
@@ -345,30 +346,30 @@ EKE = np.load("./data256_4000/fluxes/" + "EKE" + ".npz").items()[0][1]
 # plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
-fig, ax = plt.subplots(figsize=(6.5, 4))
-plt.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=1)
-plt.xlabel(r'Days', fontsize=17)
-plt.title(r'Eddy Thickness flux', fontsize=17)
-plt.xticks([200,300,400,500,600],fontsize=16)
-plt.yticks(fontsize=16)
-# plt.legend(fontsize=14,loc=2)
-plt.margins(x=0)
-# plt.show()
-plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',transparent=True)
-
-
-# fig, ax = plt.subplots(figsize=(15, 4))
-# plt.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=0.5, label = r'Truth')
-# plt.plot(np.arange(200,600,0.25),flux_nontriv_recon[0:1600],color='#ff7f0e',alpha=1, label = r'Prediction, Skill: %.3f, $R^{2}$: %.2f' %(skill(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv),R_squared(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv)))
-# plt.xlabel(r'Days', fontsize=18)
-# plt.ylabel(r'Eddy Thickness Flux', fontsize=18)
-# plt.xticks([200,250,300,350,400,450,500,550,600],fontsize=14)
-# plt.yticks([-6,-5,-4,-3,-2,-1,-0,1],fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.yticks(fontsize=14)
-# plt.legend(fontsize=14,frameon=False,loc=8)
+# fig, ax = plt.subplots(figsize=(6.5, 4))
+# plt.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=1)
+# plt.xlabel(r'Days', fontsize=17)
+# plt.title(r'Eddy Thickness flux', fontsize=17)
+# plt.xticks([200,300,400,500,600],fontsize=16)
+# plt.yticks(fontsize=16)
+# # plt.legend(fontsize=14,loc=2)
 # plt.margins(x=0)
 # # plt.show()
+# plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',transparent=True)
+
+
+fig, ax = plt.subplots(figsize=(15, 4))
+plt.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=0.5, label = r'Truth')
+plt.plot(np.arange(200,600,0.25),flux_nontriv_recon[0:1600],color='#ff7f0e',alpha=1, label = r'Prediction, Skill: %.3f, $R^{2}$: %.2f' %(skill(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv),R_squared(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv)))
+plt.xlabel(r'Days', fontsize=18)
+plt.ylabel(r'Eddy Thickness Flux', fontsize=18)
+plt.xticks([200,250,300,350,400,450,500,550,600],fontsize=14)
+plt.yticks([-6,-5,-4,-3,-2,-1,-0,1],fontsize=14)
+plt.yticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.legend(fontsize=14,frameon=False,loc=8)
+plt.margins(x=0)
+plt.show()
 # plt.savefig("./figures3/nontrivrecon.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
@@ -661,6 +662,26 @@ plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',tran
 # plt.savefig("./figures3/training.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
+
+
+
+
+
+
+# Benchmark bargraph
+# fig, ax = plt.subplots(figsize=(7.5, 5))
+# objects = [r'$\psi_{2} \sim \psi_{1}$', r'PCA', r'SVM', r'Random Forest', r'FC NN', r'CNN']
+# y_pos = np.arange(len(objects))
+# performance = [0.117,0.179,0.19,0.112,0.184,0.365]
+ 
+# plt.bar(y_pos, performance, align='center', color = ['#17becf','#17becf','#17becf','#17becf','#17becf','#1f77b4'], alpha=0.6)
+# plt.xticks(y_pos, objects, fontsize=12, rotation=30)
+# plt.ylabel('Skill', fontsize=16)
+# plt.title('Benchmark Technique Comparisons', fontsize=16)
+ 
+# plt.show()
+
+# plt.savefig("./figures3/benchmarks.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
 

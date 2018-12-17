@@ -56,6 +56,25 @@ def get_snapshots(field, folders, filtering=False, slicing=True, include_shift=F
             print('Filtering...')
             Data = Data*filter()
         return Data
+
+    # slices data into 64 images (500x500km)
+    # if slicing==True: 
+    #     print("   slicing...")
+    #     Data_sliced = np.empty((64*ld,32,32))
+    #     for j in range(8): 
+    #         for k in range(8):
+    #             Data_sliced[(8*j+k)*ld:(8*j+k+1)*ld] = Data[:,j*32:j*32+32,k*32:k*32+32]
+    #             print('   (%g,%g)' %(j,k))
+    #     if filtering == True: 
+    #         print('Filtering...')
+    #         Data_sliced = Data_sliced*filter()
+    #     return Data_sliced
+    # else:
+    #     if filtering == True:
+    #         print('Filtering...')
+    #         Data = Data*filter()
+    #     return Data
+    
     
 
 def get_flux(field, folders, filtering=False, slicing=True, include_shift=False):
@@ -92,8 +111,8 @@ def save_flux(flux,name,filtering=False,slicing=True,include_shift=False):
 #Save data to file 
 
 
-save_field(field='U1',name='U1',filtering=False,slicing=True,include_shift=False)
-save_field(field='U2',name='U2',filtering=False,slicing=True,include_shift=False)
+# save_field(field='U1',name='U1',filtering=False,slicing=True,include_shift=False)
+# save_field(field='U2',name='U2',filtering=False,slicing=True,include_shift=False)
 # save_field(field='PSI2',name='PSI2',filtering=False,slicing=True)
 # save_field(field='PV2',name='PV2',filtering=False,slicing=True)
 
@@ -103,5 +122,5 @@ save_field(field='U2',name='U2',filtering=False,slicing=True,include_shift=False
 # save_flux(flux='PV1',name='PV1_f',filtering=True,slicing=True)
 # save_flux(flux='PSI2',name='PSI2_f',filtering=True,slicing=True)
 
-
-
+save_field(field='PSI1',name='PSI1_500',filtering=False,slicing=True)
+save_flux(flux='PSI2',name='PSI2_500',filtering=False,slicing=True)

@@ -13,8 +13,8 @@ sys.path.append('./networks/')
 
 
 #USER INPUT VARIABLES
-from NET3c2f_batchnorm import neuralnetwork #NET------ file contains the neural net architecture
-savekey = 'batchnorm'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results are saved under with warning to prevent accidental overwrite
+from NET3c2f import neuralnetwork #NET------ file contains the neural net architecture
+savekey = 'triplicate_outliers'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results are saved under with warning to prevent accidental overwrite
 flux = "PSI2"  #flux to learn, probably PSI2 (unfiltered) or PSI2_f (filtered)
 field = "PSI1"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
 
@@ -23,7 +23,7 @@ field = "PSI1"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
 #SOME GLOBAL VARIABLES
 eps = 1e-3 #adamoptimizer learning rate
 K = 100 #learning batch size
-reload_data = False #if data is already loaded, save time by setting False
+reload_data = True #if data is already loaded, save time by setting False
 testfreq = 100 #how often testing is done 
 drop_prob = 0.7 #this is the keep-probability
 data_path = './data256_4000/'
@@ -55,10 +55,10 @@ if reload_data == True:
 
 #manipulate data
 ##1) No manipulation
-trainimages = trainimages_
-testimages = testimages_
-trainoutput = trainoutput_
-testoutput = testoutput_
+# trainimages = trainimages_
+# testimages = testimages_
+# trainoutput = trainoutput_
+# testoutput = testoutput_
     
 
 ##2) Train on only the first s images in your total training data
@@ -68,9 +68,15 @@ testoutput = testoutput_
 # testimages = testimages_
 # testoutput = testoutput_
 
+##3) Duplicate all data > 1std from mean
+itemindex = np.where(trainoutput_/np.std(trainoutput_)>0.68)[0]
+out_outliers = trainoutput_[itemindex]
+in_outliers = trainimages_[itemindex]
 
-
-
+trainoutput = np.concatenate((np.concatenate((trainoutput_,out_outliers)),out_outliers))
+trainimages = np.concatenate((np.concatenate((trainimages_,in_outliers)),in_outliers))
+testimages = testimages_; del testimages_; del out_outliers
+testoutput = testoutput_; del testoutput_; del in_outliers
 
 
 
@@ -103,7 +109,7 @@ accuracy_test_array = np.array([])
 
 #MAIN ROUTINE (forward propagation, back pragation and print/save analysis data)
 def main(_):
-    x = tf.placeholder(tf.float32, [None, 64, 64])
+    x = tf.placeholder(tf.float32, [None, len(trainimages[0]), len(trainimages[0])])
     yt = tf.placeholder(tf.float32, [None, 1]) #truth y
     yp, keep_prob = neuralnetwork(x) #predicted y     keep_prob = tf.placeholder(tf.as_dtype(int),shape=())
 
@@ -124,9 +130,11 @@ def main(_):
         i = 0
         max_idx = 0
         t0 = time()
-        while (i - max_idx*testfreq)*K/len(trainimages) < 3*(115200/len(trainimages)): #terminates training when the accuracy hasn't increased over this many  epochs
-        # while (i/testfreq - max_idx) < 5: #terminates training when it hasnt improved in the last 5 testing iterations 
-
+        # while (i - max_idx*testfreq)*K/len(trainimages) < 3*(112000/len(trainimages)): #terminates training when the accuracy hasn't increased over this many  epochs
+        while (i - max_idx*testfreq)*K/len(trainimages) < 3: #terminates training when the accuracy hasn't increased over this many  epochs
+# while (i/testfreq - max_idx) < 5: #terminates training when it hasnt improved in the last 5 testing iterations 
+            current_epoch = i*K/len(trainimages)
+            
             is_training = True
             batch = next_batch(K)
             train_step.run(feed_dict={x: batch[0], yt: batch[1], keep_prob: drop_prob})
@@ -175,12 +183,13 @@ def main(_):
 
                 #time series
                 plt.subplot(222)
-                series_start = int(i/testfreq)*2
+                series_start = int(i/testfreq)*10
                 x_axis = np.arange(series_start,series_start+500,1)
                 plt.plot(x_axis,yp_test[series_start:series_start+500],label='Predicted')
                 plt.plot(x_axis,yt_test[series_start:series_start+500],label='Truth')
                 plt.ylim((-1,1))
                 plt.xlabel("Days"); plt.ylabel("Output")
+                plt.margins(x=0)
                 plt.legend()
 
                 #skill function
@@ -195,35 +204,42 @@ def main(_):
                     plt.plot(np.arange(int(i-3*len(trainimages)/K),i)*K/len(trainimages),skill_array[int(i-3*len(trainimages)/K):i],label="Training",linewidth=0.3)
                     plt.plot(np.arange(int((i-3*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),skill_test_array[int((i-3*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")
                 plt.xlabel("Epochs"); plt.ylabel("Skill")
+                plt.margins(x=0)
 
                 #R plot
                 plt.subplot(224)
-                if i<3*len(trainimages)/K:
+                if i<0.5*len(trainimages)/K:
                     plt.plot(np.arange(i)*K/len(trainimages),accuracy_array[:i],label="Training",linewidth=0.3)
                     plt.plot(np.arange(int(i/testfreq)+1)*testfreq*K/len(trainimages),accuracy_test_array[:int(i/testfreq)+1],label="Testing")
+                elif i<3*len(trainimages)/K:
+                    plt.plot(np.arange(int(i-0.5*len(trainimages)/K),i)*K/len(trainimages),accuracy_array[int(i-0.5*len(trainimages)/K):i],label="Training",linewidth=0.3)
+                    plt.plot(np.arange(int((i-0.5*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),accuracy_test_array[int((i-0.5*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")
                 else:
                     plt.plot(np.arange(int(i-3*len(trainimages)/K),i)*K/len(trainimages),accuracy_array[int(i-3*len(trainimages)/K):i],label="Training",linewidth=0.3)
                     plt.plot(np.arange(int((i-3*len(trainimages)/K)/testfreq),int(i/testfreq)+1)*testfreq*K/len(trainimages),accuracy_test_array[int((i-3*len(trainimages)/K)/testfreq):int(i/testfreq)+1],label="Testing")
                 plt.xlabel("Epochs"); plt.ylabel("R")
-
-                plt.tight_layout(pad=0.4, w_pad=0.3, h_pad=1.0)
+                plt.margins(x=0)
+                
+                plt.tight_layout(pad=0.3, w_pad=0.2, h_pad=0.8)
                 plt.show()
 
                 max_idx = np.argmax(skill_test_array)
-                print('Skill = %.4f, R: %.4f, Epoch: %.1f, Time = %.2f mins' % (skill_test, accuracy_test, i*K/len(trainoutput), (time()-t0)/60))
+                if current_epoch < 3:
+                    print('Skill = %.4f, R: %.4f, Epoch: %.1f, Time = %.2f mins' % (skill_test, accuracy_test, i*K/len(trainoutput), (time()-t0)/60))
+                else:
+                    print('Skill = %.4f, R: %.4f, Epoch: %.1f, Time = %.2f mins, Average skill = %.4f' % (skill_test, accuracy_test, i*K/len(trainoutput), (time()-t0)/60, np.average(skill_test_array[-int(len(trainimages)*3/(K*testfreq)):])))
                 yp_ = sess.run(yp,feed_dict={x: batch[0], yt: batch[1], keep_prob: drop_prob}) #explicitly calculate yp as a numpy array
 
             i += 1
-            if i % int(115200/K) == 0: #saves every epoch in case it is needed to quit early 
+            if i % int(112000/K) == 0: #saves every epoch in case it is needed to quit early 
                 yt_train = trainoutput
                 yp_train = sess.run(yp,feed_dict={x: trainimages, yt: yt_train, keep_prob: 1})
                 np.savez('./arrays/outfile' + savekey, yp_train, yt_train, yp_test, yt_test, skill_array, skill_test_array, accuracy_array, accuracy_test_array)
                 print('Saved')
             
-        text = 'Max R: %.4f, Training rate: %E, Epoch: %g, Time: %.2f mins, SaveKey: %s, keep_prob: %.2f, Batch size: %g \n' %(np.max(accuracy_test_array), eps, int(i*K/len(trainoutput)), (time()-t0)/60, savekey, drop_prob, K)
+        text = 'Max R: %.4f, Training rate: %E, Epoch: %g, Time: %.2f mins, SaveKey: %s, keep_prob: %.2f, Batch size: %g, Skill (av final 3 epoch): %.4f \n' %(np.max(accuracy_test_array), eps, int(i*K/len(trainoutput)), (time()-t0)/60, savekey, drop_prob, K, np.average(skill_test_array[-int(len(trainimages)*3/(K*testfreq)):]))
         yt_train = trainoutput
         yp_train = sess.run(yp,feed_dict={x: trainimages, yt: yt_train, keep_prob: 1})
-        text = 'Max R: %.4f, Training rate: %E, Epoch: %g, Time: %.2f mins, SaveKey: %s, keep_prob: %.2f, Batch size: %g \n' %(np.max(accuracy_test_array), eps, int(i*K/len(trainoutput)), (time()-t0)/60, savekey, drop_prob, K)
         print(text)
 
         model_save_path = "./models" + "/model" + savekey + ".ckpt"
