@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import matplotlib
+import matplotlib as mpl
 import numpy as np 
 import matplotlib.cm as cm
 import scipy.signal
@@ -8,8 +8,9 @@ from scipy import stats
 from time import time 
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-from matplotlib import rc
-plt.rc('text',usetex=True)
+mpl.rcParams['text.usetex'] = True
+
+# fpath = /Users/tomgeorge/Library/Fonts/Avenir-Roman.ttf
 
 def R_squared(yp,yt): 
     return stats.mstats.linregress(yp,yt)[2]**2
