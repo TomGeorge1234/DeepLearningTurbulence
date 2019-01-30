@@ -1,6 +1,3 @@
-#QGmain.py Author: Tom George
-#To use, set user input variables, check global variable, 
-
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
@@ -11,20 +8,15 @@ from sklearn.kernel_ridge import KernelRidge
 from sklearn.neural_network import MLPRegressor
 from sklearn.ensemble import RandomForestRegressor
 from skimage.measure import block_reduce
-import hoggorm
 import time
 import sys 
-sys.path.append('./networks/')
+
 
 
 
 #USER INPUT VARIABLES
 flux = "PSI2"  #flux to learn, probably PSI2 (unfiltered) or PSI2_f (filtered)
 field = "PSI1"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
-
-
-
-#SOME GLOBAL VARIABLES
 reload_data = True #if data is already loaded, save time by setting False
 data_path = './data256_4000/'
 
@@ -32,33 +24,47 @@ data_path = './data256_4000/'
 def norm(X):
     return (X - np.mean(X))/(3*np.std(X))
 
-#LOAD AND MANIPULATE DATA
-#load data
-if reload_data == True:
+
+
+# IGNORE THIS 
+
+
+# #LOAD DATA
+# #load data
+# if reload_data == True:
     
-    print('Loading data...')
-    #this is all the available saved data, it is normalised by dividing by 2x the standard deviation of the test data
-    in_data = np.load(data_path + 'fields/' + field + ".npz").items()
-    in_train = in_data[0][1]
-    in_test = in_data[1][1]; del in_data
-    out_data = np.load(data_path + 'fluxes/' + flux + ".npz").items()
-    out_train = np.reshape(out_data[0][1],(-1,1))
-    out_test = np.reshape(out_data[1][1],(-1,1)); del out_data
+#     print('Loading data...')
+#     #this is all the available saved data, it is normalised by dividing by 2x the standard deviation of the test data
+#     in_data = np.load(data_path + 'fields/' + field + ".npz").items()
+#     in_train = in_data[0][1]
+#     in_test = in_data[1][1]; del in_data
+#     out_data = np.load(data_path + 'fluxes/' + flux + ".npz").items()
+#     out_train = np.reshape(out_data[0][1],(-1,1))
+#     out_test = np.reshape(out_data[1][1],(-1,1)); del out_data
 
-    #reassign the names, these are your data before any manipulation done below
-    X = np.reshape(block_reduce(in_train,(1,2,2),np.sum),(-1,32*32)); del in_train
-    X_ = np.reshape(block_reduce(in_test,(1,2,2),np.sum),(-1,32*32)); del in_test
-    Y = np.reshape(out_train,(-1)); del out_train
-    Y_ = np.reshape(out_test,(-1)); del out_test
-    X, X_, Y, Y_ = norm(X), norm(X_), norm(Y), norm(Y_)
-    print('Done.')
+#     #reassign the names, these are your data before any manipulation done below
+#     X = np.reshape(block_reduce(in_train,(1,2,2),np.sum),(-1,32*32)); del in_train
+#     X_ = np.reshape(block_reduce(in_test,(1,2,2),np.sum),(-1,32*32)); del in_test
+#     Y = np.reshape(out_train,(-1)); del out_train
+#     Y_ = np.reshape(out_test,(-1)); del out_test
+#     X, X_, Y, Y_ = norm(X), norm(X_), norm(Y), norm(Y_)
+#     print('Done.')
+    
+# np.savez('./data256_4000/other/sklearndata', X, X_, Y, Y_ ); 
 
-flux_nontriv = Y_
-#SOME FUNCTIONS AND ARRAY INITIALISATION
-#functions
-def accuracy(yp,yt):
-    return stats.mstats.linregress(yp,yt)[2]
 
+
+
+# X and X_ is the train and test input 
+# Y and Y_ are the train and test outputs 
+data = np.load('./data256_4000/other/sklearndata.npz').items()
+X, X_, Y, Y_ = data[0][1],data[1][1],data[2][1],data[3][1]
+
+
+
+
+
+#SOME FUNCTIONS
 def skill(yp,yt):
     return 1 - np.sqrt(((np.dot((yt-yp).T,(yt-yp)))/(len(yt))))/np.std(yt)
 
@@ -72,7 +78,7 @@ def linearly_regressed(yp,yt):
     return a[0] + a[1]*yp
 
 def R_squared(yp,yt):
-    return stats.mstats.linregress(yp,yt)[2]
+    return stats.mstats.linregress(yp,yt)[2]**2
 
 def time_series(prediction):
     flux_nontriv = Y_
@@ -92,47 +98,64 @@ def time_series(prediction):
 
 
 
+
+
+
+
+
+
+####This runs the sklearn regression on small amounts of the data set to find an estimate for the computing time scaling (assuming t = C*N^k)
+####It returns a log log graph, and an estimate for how long the regression would take on the WHOLE data set (112000)
+    
+#### chose only 1
+    
 # reg = tree.DecisionTreeRegressor()
 # reg = KernelRidge(alpha=1)
 # reg = linear_model.BayesianRidge()
-reg = svm.SVR()
-# reg = RandomForestRegressor(n_estimators = 50)
-    
-T = []
-N = [100,300,500,1000,3000,5000,8000,10000]
-for n in N:
-    t = time.time()
-    reg.fit(X[:n], Y[:n])  
-    T.append(time.time() - t)
-plt.scatter(np.log(N),np.log(T))
-alpha, beta = lin_regress(np.log(N),np.log(T))
-print('Scaling coeff: %.2f' %beta)
-predicted_time = np.exp(beta*np.log(112000) + alpha)
-print('Full set time prediction, %.1f mins' %(predicted_time/60))
+# reg = svm.SVR()
+# reg = MLPRegressor(hidden_layer_sizes=(100,10,))
+# reg = RandomForestRegressor(n_estimators = 100)  
+# T = []
+# N = [100,300,500]
+# for n in N:
+#     t = time.time()
+#     reg.fit(X[:n], Y[:n])  
+#     T.append(time.time() - t)
+# plt.scatter(np.log(N),np.log(T))
+# alpha, beta = lin_regress(np.log(N),np.log(T))
+# print('Scaling coeff: %.2f' %beta)
+# predicted_time = np.exp(beta*np.log(112000) + alpha)
+# print('Full set time prediction, %.1f mins' %(predicted_time/60))
 
 
 
+
+
+####This runs the regression on the WHOLE data set then fits it to the training data set,
+#### then plots the estimated flux against the true flux and calculates the skill
 
 # reg = svm.SVR()
 # reg = KernelRidge(alpha=1.0)
 # reg = tree.DecisionTreeRegressor()
-reg = RandomForestRegressor(n_estimators = 50)
+reg = RandomForestRegressor(n_estimators = 100)
 # reg = MLPRegressor(hidden_layer_sizes=(100,10,))
 # reg = linear_model.BayesianRidge()
 reg.fit(X[:112000],Y[:112000]) 
 prediction = reg.predict(X_)
-print('Skill: %.4f' %(skill(linearly_regressed(prediction,Y_),Y_)))
+prediction = linearly_regressed(prediction,Y_)
+print('Skill: %.4f' %(skill(prediction,Y_)))
+print('R_squared = %.4f' %(R_squared(prediction,Y_)))
 time_series(prediction)
 
 
-# sk = 0
-# for i in range(10):
-#     reg = MLPRegressor(hidden_layer_sizes=(100,10,))
-#     reg.fit(X[:112000], Y[:112000]) 
-#     prediction = reg.predict(X_)
-#     skll = skill(linearly_regressed(prediction,Y_),Y_)
-#     print('Skill: %.4f' %skll)
-#     sk += skll
-# print(sk/10)
+sk = 0
+for i in range(10):
+    reg = MLPRegressor(hidden_layer_sizes=(100,10,))
+    reg.fit(X[:112000], Y[:112000]) 
+    prediction = reg.predict(X_)
+    skll = skill(linearly_regressed(prediction,Y_),Y_)
+    print('Skill: %.4f' %skll)
+    sk += skll
+print(sk/10)
 
     

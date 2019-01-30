@@ -18,6 +18,13 @@ def filter():
              filter[i,j]=np.exp(-(1.2*(i-32)/32)**10)*np.exp(-(1.2*(j-32)/32)**10)
      return filter
 
+def filter_500():
+     filter = np.ones((32,32))
+     for i in range(32):
+         for j in range(32):
+             filter[i,j]=np.exp(-(1.2*(i-16)/16)**10)*np.exp(-(1.2*(j-16)/16)**10)
+     return filter
+ 
 def get_snapshots(field, folders, filtering=False, slicing=True, include_shift=False):
     print("Getting snapshots...%s:" %field)
     #obtains series of large domain field snapshots from folder (4000x4000km) from all folders 
@@ -67,12 +74,12 @@ def get_snapshots(field, folders, filtering=False, slicing=True, include_shift=F
     #             print('   (%g,%g)' %(j,k))
     #     if filtering == True: 
     #         print('Filtering...')
-    #         Data_sliced = Data_sliced*filter()
+    #         Data_sliced = Data_sliced*filter_500()
     #     return Data_sliced
     # else:
     #     if filtering == True:
     #         print('Filtering...')
-    #         Data = Data*filter()
+    #         Data = Data*filter_500()
     #     return Data
     
     
@@ -122,5 +129,7 @@ def save_flux(flux,name,filtering=False,slicing=True,include_shift=False):
 # save_flux(flux='PV1',name='PV1_f',filtering=True,slicing=True)
 # save_flux(flux='PSI2',name='PSI2_f',filtering=True,slicing=True)
 
-save_field(field='PSI1',name='PSI1_500',filtering=False,slicing=True)
-save_flux(flux='PSI2',name='PSI2_500',filtering=False,slicing=True)
+# save_field(field='PSI1',name='PSI1_500_f',filtering=True,slicing=True)
+# save_flux(flux='PSI2',name='PSI2_500_f',filtering=True,slicing=True)
+    
+save_flux(flux='PSI2',name='PSI2_test',filtering=False,slicing=True)

@@ -11,9 +11,13 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from matplotlib import rc
 plt.rc('text',usetex=True)
 
+def R_squared(yp,yt): 
+    return stats.mstats.linregress(yp,yt)[2]**2
 
-def R_squared(yp,yt):
-    return stats.mstats.linregress(yp,yt)[2]
+
+def norm(X):
+    return (X - np.mean(X))/(np.std(X))
+
 
 def RMSerror(yp,yt):
     RMSerror = np.sqrt(((np.dot((yt-yp).T,(yt-yp)))/(len(yt))))/np.std(yt)
@@ -47,99 +51,67 @@ def moving_average(data_set, periods=3):
 
 
 
+
+
+
+
 #single print of field
 
-# PSI1 = np.load("./data256_4000/fields/" + "PSI1" + ".npz").items()
-# PSI1 = PSI1[1][1]*0.1
-# PV1 = np.load("./data256_4000/fields/" + "PV1" + ".npz").items()
-# PV1 = PV1[1][1]*0.1
-# PSI2 = np.load("./data256_4000/fields/" + "PSI2" + ".npz").items()
-# PSI2 = PSI2[1][1]*0.1
-# PV2 = np.load("./data256_4000/fields/" + "PV2" + ".npz").items()
-# PV2 = PV2[1][1]*0.1
-# PV1_full = np.load("./data256_4000/fields/" + "PV1_fulldomain" + ".npz").items()
-# PV1_full = PV1_full[1][1]*0.1
+# PSI1 = np.load("./data256_4000/fields/" + "PSI1" + ".npz").items()[1][1]
+# PV1 = np.load("./data256_4000/fields/" + "PV1" + ".npz").items()[1][1]
+# PSI2 = np.load("./data256_4000/fields/" + "PSI2" + ".npz").items()[1][1]
+# PV2 = np.load("./data256_4000/fields/" + "PV2" + ".npz").items()[1][1]
+# PV1_full = np.load("./data256_4000/fields/" + "PV1_fulldomain" + ".npz").items()[1][1]
 
-# # flux_PV1 = np.load("./data256_4000/fluxes/" + "PV1_unchopped" + ".npz").items()[1][1]*3*np.load("./data256_4000/fluxes/" + "PV1_unchopped" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PV1_unchopped" + ".npz").items()[2][1]# flux_PV1_full = np.load("./data256_4000/" + "flux_PV1full_test" + ".npz").items()[0][1]# flux_full = np.load("./data256_4000/" + "flux_PV1_test" + ".npz").items()[0][1]*3*np.load("./data256_4000/" + "flux_PV1_test" + ".npz").items()[2][1]+np.load("./data256_4000/" + "flux_PV1_test" + ".npz").items()[1][1]
+# flux_PV1 = np.load("./data256_4000/fluxes/" + "PV1_unchopped" + ".npz").items()[1][1]*3*np.load("./data256_4000/fluxes/" + "PV1_unchopped" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PV1_unchopped" + ".npz").items()[2][1]# flux_PV1_full = np.load("./data256_4000/" + "flux_PV1full_test" + ".npz").items()[0][1]# flux_full = np.load("./data256_4000/" + "flux_PV1_test" + ".npz").items()[0][1]*3*np.load("./data256_4000/" + "flux_PV1_test" + ".npz").items()[2][1]+np.load("./data256_4000/" + "flux_PV1_test" + ".npz").items()[1][1]
 
-# # K = 300+9*1000
+# K = 300+9*1000
 # K1 = 300
+
+# def norm(x):
+#     if np.abs(np.min(x)) > np.abs(np.max(x)):
+#         return(x/np.abs(np.min(x)))
+#     else:
+#         return(x/np.max(x))
 
 # Z = PV1[K]
 # fig, ax = plt.subplots(figsize=(4, 4))
-# im = plt.imshow(Z, extent=[0, 1000, 0, 1000])
-# plt.yticks([0,250,500,750,1000],size=16)
-# plt.xticks([0,250,500,750,1000],size=16)
+# im = plt.imshow(norm(Z))
 # plt.axis('off')
-# divider = make_axes_locatable(ax)
-# # cax = divider.append_axes("right", size="5%", pad=0.05)
-# # cbar = plt.colorbar(im, cax=cax)
-# # ax = plt.axis()
-# # for font_objects in cbar.ax.yaxis.get_ticklabels():
-#     # font_objects.set_size(16)
-# # plt.show()
-# plt.savefig("./figures3/PV1.png", dpi=300, bbox_inches = 'tight', transparent=True)
+# plt.savefig("./figures3/PV1_.pdf", dpi=300, bbox_inches = 'tight', transparent=True)
 
 # Z = PSI1[K]
 # fig, ax = plt.subplots(figsize=(4, 4))
-# im = plt.imshow(Z, extent=[0, 1000, 0, 1000])
-# plt.yticks([0,250,500,750,1000],size=16)
-# plt.xticks([0,250,500,750,1000],size=16)
+# im = plt.imshow(norm(Z))
 # plt.axis('off')
-# divider = make_axes_locatable(ax)
-# # cax = divider.append_axes("right", size="5%", pad=0.05)
-# # cbar = plt.colorbar(im, cax=cax)
-# # ax = plt.axis()
-# # for font_objects in cbar.ax.yaxis.get_ticklabels():
-#     # font_objects.set_size(16)
-# # plt.show()
-# plt.savefig("./figures3/PSI1.png", dpi=300, bbox_inches = 'tight', transparent=True)
+# plt.savefig("./figures3/PSI1_.pdf", dpi=300, bbox_inches = 'tight', transparent=True)
 
 # Z = PV2[K]
 # fig, ax = plt.subplots(figsize=(4, 4))
-# im = plt.imshow(Z, extent=[0, 1000, 0, 1000])
-# plt.yticks([0,250,500,750,1000],size=16)
-# plt.xticks([0,250,500,750,1000],size=16)
+# im = plt.imshow(norm(Z))
 # plt.axis('off')
-# divider = make_axes_locatable(ax)
-# # cax = divider.append_axes("right", size="5%", pad=0.05)
-# # cbar = plt.colorbar(im, cax=cax)
-# # ax = plt.axis()
-# # for font_objects in cbar.ax.yaxis.get_ticklabels():
-#     # font_objects.set_size(16)
-# # plt.show()
-# plt.savefig("./figures3/PV2.png", dpi=300, bbox_inches = 'tight', transparent=True)
+# plt.savefig("./figures3/PV2_.pdf", dpi=300, bbox_inches = 'tight', transparent=True)
 
 # Z = PSI2[K]
 # fig, ax = plt.subplots(figsize=(4, 4))
-# im = plt.imshow(Z, extent=[0, 1000, 0, 1000])
-# plt.yticks([0,250,500,750,1000],size=16)
-# plt.xticks([0,250,500,750,1000],size=16)
+# im = plt.imshow(norm(Z))
 # plt.axis('off')
-# divider = make_axes_locatable(ax)
-# # cax = divider.append_axes("right", size="5%", pad=0.05)
-# # cbar = plt.colorbar(im, cax=cax)
-# # ax = plt.axis()
-# # for font_objects in cbar.ax.yaxis.get_ticklabels():
-# #     font_objects.set_size(16)
-# # plt.show()
-# plt.savefig("./figures3/PSI2.png", dpi=300, bbox_inches = 'tight', transparent=True)
+# plt.savefig("./figures3/PSI2_.pdf", dpi=300, bbox_inches = 'tight', transparent=True)
 
 
 # Z = PV1_full[K1]
 # fig, ax = plt.subplots(figsize=(9, 9))
-# im = plt.imshow(Z, extent=[0, 4000, 0, 4000])
+# im = plt.imshow(norm(Z), extent=[0, 4000, 0, 4000])
 # plt.yticks([0,1000,2000,3000,4000],size=16)
 # plt.xticks([0,1000,2000,3000,4000],size=16)
 # divider = make_axes_locatable(ax)
-# cax = divider.append_axes("right", size="10%", pad=0.5)
-# cbar = plt.colorbar(im, cax=cax)
-# ax = plt.axis()
-# for font_objects in cbar.ax.yaxis.get_ticklabels():
-#     font_objects.set_size(30)
-# # plt.show()
-# plt.savefig("./figures3/PV1_fulldomain.png", dpi=300, bbox_inches = 'tight', transparent=True)
-# 
+# # cax = divider.append_axes("right", size="10%", pad=0.5)
+# # cbar = plt.colorbar(im, cax=cax)
+# # ax = plt.axis()
+# # for font_objects in cbar.ax.yaxis.get_ticklabels():
+# #     font_objects.set_size(30)
+# plt.savefig("./figures3/PV1_fulldomain_.pdf", dpi=300, bbox_inches = 'tight', transparent=True)
+
 
 
 # fig, ax = plt.subplots(figsize=(12*0.8, 4*0.8))
@@ -154,8 +126,14 @@ def moving_average(data_set, periods=3):
 # plt.savefig("./figures3/full_unchopped.png", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
-
-
+# a = np.array([[-1,1]])
+# plt.figure(figsize=(4,9))
+# img = plt.imshow(a, cmap='viridis')
+# plt.gca().set_visible(False)
+# cax = plt.axes([0.1, 0.1, 0.3, 0.8])
+# cbar = plt.colorbar(cax=cax, orientation='vertical', ticks=[-1,-0.5,0,0.5,1])
+# cbar.ax.tick_params(labelsize=60) 
+# plt.savefig('./figures3/' + 'main_colourbar' + '.pdf', dpi = 300, transparent=True)
 
 
 
@@ -173,13 +151,13 @@ def moving_average(data_set, periods=3):
 
 #phase space plot 
 
-def moving_average(data_set, periods=3):
-    weights = np.ones(periods) / periods
-    return np.convolve(data_set, weights, mode='valid')
+# def moving_average(data_set, periods=3):
+#     weights = np.ones(periods) / periods
+#     return np.convolve(data_set, weights, mode='valid')
 
-flux_std = np.std(np.load("./data256_4000/" + "fluxes/PSI2" + ".npz").items()[0][1]) 
+# flux_std = np.std(np.load("./data256_4000/" + "fluxes/PSI2" + ".npz").items()[0][1]) 
 
-path = '/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/arrays/outfilenoimages'
+# path = '/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/arrays/outfilenoimages'
 
 # R1 = np.mean(np.load(path + '330.npz').items()[5][1][-1:])
 # R2 = np.mean(np.load(path + '1000.npz').items()[5][1][-1:])
@@ -188,7 +166,7 @@ path = '/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/arrays/outfilenoima
 # R5 = np.mean(np.load(path + '18000.npz').items()[5][1][-5:])
 # R6 = np.mean(np.load(path + '33000.npz').items()[5][1][-10:])
 # R7 = np.mean(np.load(path + '56000.npz').items()[5][1][-17:])
-R8 = np.mean(np.load(path +'112000.npz').items()[5][1][-34:])
+# R8 = np.mean(np.load(path +'112000.npz').items()[5][1][-34:])
 # R9 = np.mean(np.load(path + '224000.npz').items()[5][1][-67:])
 
 # R1_ = np.mean(moving_average(np.load(path + '330.npz').items()[4][1],160)[-10:])
@@ -220,7 +198,7 @@ R8 = np.mean(np.load(path +'112000.npz').items()[5][1][-34:])
 # plt.ylabel(r'Skill', fontsize = 18)
 # plt.legend(fontsize = 16, frameon=False)
 # # plt.show()
-# plt.savefig("./figures3/phase_space.png", dpi=300, bbox_inches = 'tight',transparent=True)
+# plt.savefig("./figures3/phase_space.pdf", dpi=300, bbox_inches = 'tight',transparent=True)
 
     
 
@@ -296,7 +274,10 @@ R8 = np.mean(np.load(path +'112000.npz').items()[5][1][-34:])
 # plt.ylabel(r'Skill', fontsize = 18)
 # plt.legend(fontsize = 16,frameon=False)
 # # plt.show()
-# plt.savefig("./figures3/depth_skill.png", dpi=300, bbox_inches = 'tight',transparent=True)
+# plt.savefig("./figures3/depth_skill.pdf", dpi=300, bbox_inches = 'tight',transparent=True)
+
+
+
 
 
 
@@ -314,14 +295,14 @@ R8 = np.mean(np.load(path +'112000.npz').items()[5][1][-34:])
 # # flux time series'
   
 flux_nontriv = (np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[1][1]*3*np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[2][1])/(1.2*40*40)
+# flux_nontriv_nocrop = (np.load("./data256_4000/fluxes/" + "PSI2_nocrop" + ".npz").items()[1][1]*3*np.load("./data256_4000/fluxes/" + "PSI2_nocrop" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2_nocrop" + ".npz").items()[2][1])/(1.2*40*40)
 # flux_full = np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[1][1]*3*np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PV1" + ".npz").items()[2][1]
 # flux_triv = flux_full - flux_nontriv
 flux_nontriv_recon = (np.load("./arrays/outfile3c2f.npz").items()[2][1]*3*np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[2][1])/(1.2*40*40)
-# flux_nontriv_recon = (np.load("./arrays/outfileduplicate_outliers.npz").items()[2][1]*3*np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[3][1] + np.load("./data256_4000/fluxes/" + "PSI2" + ".npz").items()[2][1])/(1.2*40*40)
 # EKE = np.load("./data256_4000/fluxes/" + "EKE" + ".npz").items()[0][1]
 
-# flux_nontriv = (flux_nontriv-np.mean(flux_nontriv))/np.std(flux_nontriv)
-# flux_nontriv_recon = linearly_regressed(flux_nontriv_recon,flux_nontriv)
+# # flux_nontriv = (flux_nontriv-np.mean(flux_nontriv))/np.std(flux_nontriv)
+# # flux_nontriv_recon = linearly_regressed(flux_nontriv_recon,flux_nontriv)
 # EKE = (EKE - np.mean(EKE))/np.std(EKE)
 
 # # #1f77b4 blue
@@ -329,81 +310,68 @@ flux_nontriv_recon = (np.load("./arrays/outfile3c2f.npz").items()[2][1]*3*np.loa
 # # # d62728 red
 # # # ff7f0e orange
 
-# fig, ax1 = plt.subplots(figsize=(8, 4))
-# ax1.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=1)
-# ax1.set_xlabel(r'Days', fontsize=18)
-# ax1.set_ylabel(r'Coupled Flux', fontsize=18, color = '#ff7f0e')
-# ax1.tick_params('y',colors='#ff7f0e',labelsize=16)
-# ax1.tick_params('x',labelsize=16)
-# ax1.set_ylim([-3,3])
-# ax2 = ax1.twinx()
-# ax2.plot(np.arange(200,600,0.25),EKE[0:1600],color='#d62728',alpha=1)
-# ax2.set_ylabel(r'Eddy Kinetic Energy', fontsize=18, color='#d62728')
-# ax2.tick_params('y',colors='#d62728',labelsize=16)
-# ax2.set_ylim([-2.5,2.5])
-# plt.xticks([200,300,400,500,600])
-# # plt.show()
-# plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',transparent=True)
-
 
 # fig, ax = plt.subplots(figsize=(6.5, 4))
 # plt.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=1)
 # plt.xlabel(r'Days', fontsize=17)
-# plt.title(r'Eddy Thickness flux', fontsize=17)
+# plt.title(r'Eddy Heat Flux', fontsize=17)
 # plt.xticks([200,300,400,500,600],fontsize=16)
 # plt.yticks(fontsize=16)
-# # plt.legend(fontsize=14,loc=2)
+# ax.set_ylim([-6.5,1])
 # plt.margins(x=0)
 # # plt.show()
-# plt.savefig("./figures3/fluxtimeseries.png", dpi=300, bbox_inches = 'tight',transparent=True)
+# plt.savefig("./figures3/fluxtimeseries.pdf", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
-fig, ax = plt.subplots(figsize=(15, 4))
-plt.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=0.5, label = r'Truth')
-plt.plot(np.arange(200,600,0.25),flux_nontriv_recon[0:1600],color='#ff7f0e',alpha=1, label = r'Prediction, Skill: %.3f, $R^{2}$: %.2f' %(skill(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv),R_squared(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv)))
-plt.xlabel(r'Days', fontsize=18)
-plt.ylabel(r'Eddy Thickness Flux', fontsize=18)
-plt.xticks([200,250,300,350,400,450,500,550,600],fontsize=14)
-plt.yticks([-6,-5,-4,-3,-2,-1,-0,1],fontsize=14)
-plt.yticks(fontsize=14)
-plt.yticks(fontsize=14)
-plt.legend(fontsize=14,frameon=False,loc=8)
-plt.margins(x=0)
-plt.show()
-# plt.savefig("./figures3/nontrivrecon.png", dpi=300, bbox_inches = 'tight',transparent=True)
+# fig, ax = plt.subplots(figsize=(15, 4))
+# plt.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=0.5, label = r'Truth')
+# plt.plot(np.arange(200,600,0.25),flux_nontriv_recon[0:1600],color='#ff7f0e',alpha=1, label = r'Prediction, Skill: %.3f, $R^{2}$: %.2f' %(skill(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv),R_squared(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv)))
+# plt.xlabel(r'Days', fontsize=18)
+# plt.ylabel(r'Eddy Heat Flux', fontsize=18)
+# plt.xticks([200,250,300,350,400,450,500,550,600],fontsize=14)
+# plt.yticks([-6,-5,-4,-3,-2,-1,-0,1],fontsize=14)
+# plt.yticks(fontsize=14)
+# plt.yticks(fontsize=14)
+# plt.legend(fontsize=14,frameon=False,loc=8)
+# plt.margins(x=0)
+# # plt.show()
+# plt.savefig("./figures3/nontrivrecon.pdf", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
 
 # scatter
-# fig, ax = plt.subplots(figsize=(8, 5.3))
-# plt.scatter(flux_nontriv[::5],linearly_regressed(flux_nontriv_recon,flux_nontriv)[::5],marker = '.', s = 1, color='#ff7f0e', label=r'$R^{2} = %.2f$' %R_squared(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv))
-# plt.plot([-6,1],[-6,1],":",color="black")
-# plt.axis([-1,1,-1,1],'equal')
-# plt.xlabel(r"True Flux", fontsize=24); plt.ylabel(r"Predicted Flux", fontsize=24)
-# plt.ylim([-6,1])
-# plt.xlim([-6,1])
-# plt.yticks([-6,-5,-4,-3,-2,-1,0,1],fontsize=18)
-# plt.xticks([-6,-5,-4,-3,-2,-1,0,1],fontsize=18)
+fig, ax = plt.subplots(figsize=(8, 5.3))
+plt.scatter(flux_nontriv[::5],linearly_regressed(flux_nontriv_recon,flux_nontriv)[::5],marker = '.', s = 1.4, color='#ff7f0e', label=r'$R^{2} = %.2f$' %R_squared(linearly_regressed(flux_nontriv_recon,flux_nontriv),flux_nontriv))
+plt.plot([-6,1],[-6,1],":",color="black")
+plt.axis([-1,1,-1,1],'equal')
+plt.xlabel(r"True Flux", fontsize=24); plt.ylabel(r"Predicted Flux", fontsize=24)
+plt.ylim([-6,1])
+plt.xlim([-6,1])
+plt.yticks([-6,-5,-4,-3,-2,-1,0,1],fontsize=18)
+plt.xticks([-6,-5,-4,-3,-2,-1,0,1],fontsize=18)
 
-# fig  = plt.gcf()
-# fwidth = fig.get_figwidth()
-# fheight = fig.get_figheight()
-# bb = ax.get_position()
-# axwidth = fwidth * (bb.x1 - bb.x0)
-# axheight = fheight * (bb.y1 - bb.y0)
-# if axwidth > axheight:
-#     narrow_by = (axwidth - axheight) / fwidth
-#     bb.x0 += narrow_by / 2
-#     bb.x1 -= narrow_by / 2
-# elif axheight > axwidth:
-#     shrink_by = (axheight - axwidth) / fheight
-#     bb.y0 += shrink_by / 2
-#     bb.y1 -= shrink_by / 2
-# ax.set_position(bb)
-# plt.legend(frameon=False, fontsize = 20,loc=2)
+fig  = plt.gcf()
+fwidth = fig.get_figwidth()
+fheight = fig.get_figheight()
+bb = ax.get_position()
+axwidth = fwidth * (bb.x1 - bb.x0)
+axheight = fheight * (bb.y1 - bb.y0)
+if axwidth > axheight:
+    narrow_by = (axwidth - axheight) / fwidth
+    bb.x0 += narrow_by / 2
+    bb.x1 -= narrow_by / 2
+elif axheight > axwidth:
+    shrink_by = (axheight - axwidth) / fheight
+    bb.y0 += shrink_by / 2
+    bb.y1 -= shrink_by / 2
+ax.set_position(bb)
+plt.legend(frameon=False, fontsize = 20,loc=2)
 
-# # plt.show()
-# plt.savefig("./figures3/fluxscatter.png", dpi=300, bbox_inches = 'tight', transparent=True)
+plt.show()
+# plt.savefig("./figures3/fluxscatter.pdf", dpi=500, bbox_inches = 'tight', transparent=True)
+
+
+
 
 
 
@@ -490,8 +458,8 @@ plt.show()
 # # plt.plot(np.arange(0,60,0.25),EKEfullcorrelation[:240],color='#d62728',alpha=1,label=r'Full PV $\bigotimes$ EKE')
 # plt.xlabel(r'Lag days', fontsize=20)
 # plt.title(r'Autocorrrelation', fontsize=20)
-# plt.xticks([0,10,20,30,40,50],fontsize=18)
-# plt.yticks(fontsize=18)
+# plt.xticks([0,10,20,30,40,50],fontsize=20)
+# plt.yticks(fontsize=20)
 # plt.legend(fontsize=16,frameon=False)
 # plt.margins(x=0)
 
@@ -512,7 +480,12 @@ plt.show()
 # ax.set_position(bb)
 
 # # plt.show()
-# plt.savefig("./figures3/correlations.png", dpi=300, bbox_inches = 'tight',transparent=True)
+# plt.savefig("./figures3/correlations.pdf", dpi=300, bbox_inches = 'tight',transparent=True)
+
+
+
+
+
 
 
 
@@ -568,7 +541,9 @@ plt.show()
 # ax.set_xscale('log')
 # ax.set_yscale('log')
 # # plt.show()
-# plt.savefig("./figures3/spectra.png", dpi=300, bbox_inches = 'tight',transparent=True)
+# plt.savefig("./figures3/spectra.pdf", dpi=300, bbox_inches = 'tight',transparent=True)
+
+
 
 
 
@@ -626,7 +601,7 @@ plt.show()
 # plt.yticks(fontsize=18)
 # plt.legend(fontsize=18,frameon=False,loc=2)
 # # plt.show()
-# plt.savefig("./figures3/histogram.png", dpi=300, bbox_inches = 'tight',transparent=True)
+# plt.savefig("./figures3/histogram.pdf", dpi=400, bbox_inches = 'tight',transparent=True)
 
 
 
@@ -659,7 +634,7 @@ plt.show()
 # plt.legend(fontsize=18,frameon=False)
 # plt.margins(x=0)
 # # plt.show()
-# plt.savefig("./figures3/training.png", dpi=300, bbox_inches = 'tight',transparent=True)
+# plt.savefig("./figures3/training.pdf", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
 
@@ -669,19 +644,40 @@ plt.show()
 
 
 # Benchmark bargraph
-# fig, ax = plt.subplots(figsize=(7.5, 5))
-# objects = [r'$\psi_{2} \sim \psi_{1}$', r'PCA', r'SVM', r'Random Forest', r'FC NN', r'CNN']
-# y_pos = np.arange(len(objects))
-# performance = [0.117,0.179,0.19,0.112,0.184,0.365]
- 
-# plt.bar(y_pos, performance, align='center', color = ['#17becf','#17becf','#17becf','#17becf','#17becf','#1f77b4'], alpha=0.6)
-# plt.xticks(y_pos, objects, fontsize=12, rotation=30)
-# plt.ylabel('Skill', fontsize=16)
-# plt.title('Benchmark Technique Comparisons', fontsize=16)
- 
+    
+# pull some results
+path = '/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/arrays/outfile'
+S1 = np.max(np.load(path+'2c2f.npz').items()[5][1])
+S2 = np.max(np.load(path+'3c2f.npz').items()[5][1])
+S3 = np.max(np.load(path+'4fullyconnected.npz').items()[5][1])
+R1 = np.max(np.load(path+'2c2f.npz').items()[7][1])
+R2 = np.max(np.load(path+'3c2f.npz').items()[7][1])
+R3 = np.max(np.load(path+'4fullyconnected.npz').items()[7][1])
+
+fig, ax = plt.subplots(figsize=(10, 5))
+objects = [r'Linear' +'\n' + 'Regression',    r'Random' +'\n' + 'Forest',  r'PCA',    r'SVM',     r'FC NN',     r'CNN' +'\n' + 'low' +'\n' + 'complexity',       r'CNN' +'\n' + 'high' +'\n' + 'complexity',      r'CNN' +'\n' + 'optimal'     ]
+y_pos = np.arange(len(objects))
+performance = [0.117, 0.117, 0.179,  0.1815,  0.208,  0.353,  0.358, 0.379]
+# R_sq = [0.470,  0.571,  0.6,  0.6,  0.602,  765,  776,  791]
+R_sq = [r'$R^{2}=0.22$', r'$R^{2}=0.22$',  r'$R^{2}=0.33$',  r'$R^{2}=0.33$',   r'$R^{2}=0.36$',  r'$R^{2}=0.59$',  r'$R^{2}=0.60$',  r'$R^{2}=0.63$']
+
+#Random forest w 50 tree 0.112
+ax.bar(y_pos, performance, align='center', color = ['#17cfc8','#17cfc8','#17cfc8','#17cfc8','#17cfc8','#1f6eb4','#1f6eb4','#1f6eb4'], alpha=0.6)
+rects = ax.patches
+# Make some labels.
+labels = ["%s" % i for i in R_sq]
+
+for rect, label in zip(rects, labels):
+    height = rect.get_height()
+    ax.text(rect.get_x() + rect.get_width() / 2, height-0.02, label,
+            ha='center', va='bottom')
+plt.xticks(y_pos, objects, fontsize=12, rotation=0)
+plt.ylabel('Skill', fontsize=16)
+plt.title('Benchmark Technique Comparisons', fontsize=16)
+plt.ylim([0,0.4])
 # plt.show()
 
-# plt.savefig("./figures3/benchmarks.png", dpi=300, bbox_inches = 'tight',transparent=True)
+plt.savefig("./figures3/benchmarks.pdf", dpi=300, bbox_inches = 'tight',transparent=True)
 
 
 

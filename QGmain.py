@@ -14,7 +14,7 @@ sys.path.append('./networks/')
 
 #USER INPUT VARIABLES
 from NET3c2f import neuralnetwork #NET------ file contains the neural net architecture
-savekey = 'triplicate_outliers'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results are saved under with warning to prevent accidental overwrite
+savekey = 'normal'; print('WARNING! SAVEKEY = %s, IS THIS CORRECT?' %savekey) #unique key the results are saved under with warning to prevent accidental overwrite
 flux = "PSI2"  #flux to learn, probably PSI2 (unfiltered) or PSI2_f (filtered)
 field = "PSI1"  #field to learn flux, probably PSI1 or PSI1_f (filtered)
 
@@ -27,6 +27,7 @@ reload_data = True #if data is already loaded, save time by setting False
 testfreq = 100 #how often testing is done 
 drop_prob = 0.7 #this is the keep-probability
 data_path = './data256_4000/'
+n_epochs = 3 # terminate training after this many epochs
 
 
 
@@ -55,10 +56,10 @@ if reload_data == True:
 
 #manipulate data
 ##1) No manipulation
-# trainimages = trainimages_
-# testimages = testimages_
-# trainoutput = trainoutput_
-# testoutput = testoutput_
+trainimages = trainimages_
+testimages = testimages_
+trainoutput = trainoutput_
+testoutput = testoutput_
     
 
 ##2) Train on only the first s images in your total training data
@@ -69,14 +70,18 @@ if reload_data == True:
 # testoutput = testoutput_
 
 ##3) Duplicate all data > 1std from mean
-itemindex = np.where(trainoutput_/np.std(trainoutput_)>0.68)[0]
-out_outliers = trainoutput_[itemindex]
-in_outliers = trainimages_[itemindex]
+# itemindex = np.where(np.abs(trainoutput_)>np.std(trainoutput_))[0]
+# out_outliers = trainoutput_[itemindex]
+# in_outliers = trainimages_[itemindex]
 
-trainoutput = np.concatenate((np.concatenate((trainoutput_,out_outliers)),out_outliers))
-trainimages = np.concatenate((np.concatenate((trainimages_,in_outliers)),in_outliers))
-testimages = testimages_; del testimages_; del out_outliers
-testoutput = testoutput_; del testoutput_; del in_outliers
+# trainoutput = np.concatenate((trainoutput_,out_outliers))
+# trainimages = np.concatenate((trainimages_,in_outliers))
+
+# trainoutput = np.concatenate((np.concatenate((trainoutput_,out_outliers)),out_outliers))
+# trainimages = np.concatenate((np.concatenate((trainimages_,in_outliers)),in_outliers))
+
+# testimages = testimages_; del testimages_; del out_outliers
+# testoutput = testoutput_; del testoutput_; del in_outliers
 
 
 
@@ -88,7 +93,7 @@ def next_batch(k):
     return trainimages[idx], trainoutput[idx]
 
 def accuracy(yp,yt):
-    return stats.mstats.linregress(yp,yt)[2]
+    return stats.mstats.linregress(yp,yt)[2]**2
 
 def skill(yp,yt):
     return 1 - np.sqrt(((np.dot((yt-yp).T,(yt-yp)))/(len(yt))))/np.std(yt)
@@ -130,9 +135,9 @@ def main(_):
         i = 0
         max_idx = 0
         t0 = time()
-        # while (i - max_idx*testfreq)*K/len(trainimages) < 3*(112000/len(trainimages)): #terminates training when the accuracy hasn't increased over this many  epochs
-        while (i - max_idx*testfreq)*K/len(trainimages) < 3: #terminates training when the accuracy hasn't increased over this many  epochs
-# while (i/testfreq - max_idx) < 5: #terminates training when it hasnt improved in the last 5 testing iterations 
+        # while (i - max_idx*testfreq)*K/len(trainimages) < n_epochs*(112000/len(trainimages)): #terminates training when the accuracy hasn't increased over this many  epochs
+        while (i - max_idx*testfreq)*K/len(trainimages) < n_epochs: #terminates training when the accuracy hasn't increased over this many  epochs
+#       while (i/testfreq - max_idx) < 5: #terminates training when it hasnt improved in the last 5 testing iterations 
             current_epoch = i*K/len(trainimages)
             
             is_training = True

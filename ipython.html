@@ -1,0 +1,1820 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="qrichtext" content="1" /><style type="text/css">
+p, li { white-space: pre-wrap; }
+</style></head><body style=" font-family:'Menlo'; font-size:12pt; font-weight:400; font-style:normal;">
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> def skill(yp,yt):</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     return 1 - np.sqrt(((np.dot((yt-yp).T,(yt-yp)))/(len(yt))))/np.std(yt)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> def lin_regress(yp,yt): #returns the coefficients of the linear fit yt = alpha + beta.yp</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     beta = stats.mstats.linregress(yp,yt)[2]*(np.std(yt)/np.std(yp))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     alpha = np.mean(yt) - beta*np.mean(yp)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     return alpha, beta</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> def linearly_regressed(yp,yt):</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     a = lin_regress(yp,yt)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     return a[0] + a[1]*yp</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> def R_squared(yp,yt):</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     return stats.mstats.linregress(yp,yt)[2]</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> def time_series(prediction):</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     flux_nontriv = Y_</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     flux_nontriv_recon = linearly_regressed(prediction,flux_nontriv)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     fig, ax = plt.subplots(figsize=(15, 4))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     plt.plot(np.arange(200,600,0.25),flux_nontriv[0:1600],color='#ff7f0e',alpha=0.5, label = r'Truth')</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     plt.plot(np.arange(200,600,0.25),flux_nontriv_recon[0:1600],color='#ff7f0e',alpha=1, label = r'Prediction, Skill: %.4f, $R^{2}$: %.2f' %(skill(flux_nontriv_recon,flux_nontriv),R_squared(flux_nontriv_recon,flux_nontriv)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     plt.xlabel(r'Days', fontsize=18)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     plt.ylabel(r'Eddy Thickness Flux', fontsize=18)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     plt.xticks([200,250,300,350,400,450,500,550,600],fontsize=14)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     plt.yticks([-1,-0,1],fontsize=14)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     plt.yticks(fontsize=14)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     plt.yticks(fontsize=14)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     plt.legend(fontsize=14,frameon=False,loc=8)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     plt.margins(x=0)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     plt.show()</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">59</span><span style=" color:#000080;">]:</span> reg = svm.SVR()</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> # reg = RandomForestRegressor(n_estimators = 50)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> T = []</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> N = [100,300,500,1000]</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> for n in N:</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     t = time.time()</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     reg.fit(X[:n], Y[:n])  </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     T.append(time.time() - t)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> plt.scatter(np.log(N),np.log(T))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> alpha, beta = lin_regress(np.log(N),np.log(T))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print('Scaling coeff: %.2f' %beta)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> predicted_time = np.exp(beta*np.log(112000) + alpha)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print('Full set time prediction, %.1f mins' %(predicted_time/60))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Scaling coeff: 1.72</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Full set time prediction, 52.6 mins</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><img src="data:image/png;base64,
+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
+" /></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">60</span><span style=" color:#000080;">]:</span> reg = MLPRegressor(hidden_layer_sizes=(100,10,))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> # reg = RandomForestRegressor(n_estimators = 50)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> T = []</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> N = [100,300,500,1000]</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> for n in N:</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     t = time.time()</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     reg.fit(X[:n], Y[:n])  </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     T.append(time.time() - t)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> plt.scatter(np.log(N),np.log(T))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> alpha, beta = lin_regress(np.log(N),np.log(T))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print('Scaling coeff: %.2f' %beta)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> predicted_time = np.exp(beta*np.log(112000) + alpha)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print('Full set time prediction, %.1f mins' %(predicted_time/60))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Scaling coeff: 0.58</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Full set time prediction, 0.1 mins</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><img src="data:image/png;base64,
+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
+A+/5gmapK/dQAAAAAElFTkSuQmCC
+" /></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">61</span><span style=" color:#000080;">]:</span> sk = 0</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> for i in range(10):</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     reg = MLPRegressor(hidden_layer_sizes=(100,10,))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     reg.fit(X[:112000], Y[:112000]) </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     prediction = reg.predict(X_)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     skll = skill(linearly_regressed(prediction,Y_),Y_)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     print('Skill: %.4f' %skll)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     sk += skll</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print(sk/10)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Skill: 0.2087</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Skill: 0.2109</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Skill: 0.2088</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Skill: 0.2200</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Skill: 0.2089</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Skill: 0.2068</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Skill: 0.2113</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Skill: 0.2040</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Skill: 0.2117</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Skill: 0.1933</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">0.20845170927482376</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">62</span><span style=" color:#000080;">]:</span> reg = MLPRegressor(hidden_layer_sizes=(100,10,))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> # reg = linear_model.BayesianRidge()</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> reg.fit(X[:112000],Y[:112000]) </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> prediction = reg.predict(X_)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> prediction = linearly_regressed(prediction,Y_)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print('Skill: %.4f' %(skill(prediction,Y_)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print('R_squared = %.4f' %(R_squared(prediction,Y_)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> time_series(prediction)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Skill: 0.2014</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">R_squared = 0.6019</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><img src="data:image/png;base64,
+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
+YII=
+" /></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">63</span><span style=" color:#000080;">]:</span> import keras</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> from keras.datasets import mnist</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> from keras.models import Sequential</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> from keras.layers import Dense, Dropout, Flatten</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> from keras.layers import Conv2D, MaxPooling2D</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> import numpy as np</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> batch_size = 100</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> num_classes = 10</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> epochs = 1</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  from ._conv import register_converters as _register_converters</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Using TensorFlow backend.</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">64</span><span style=" color:#000080;">]:</span> if reload_data == True:</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     print('Loading data...')</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     #this is all the available saved data, it is normalised by dividing by 2x the standard deviation of the test data</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     in_data = np.load(data_path + 'fields/' + field + &quot;.npz&quot;).items()</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     x_train = in_data[0][1]</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     x_test = in_data[1][1]; del in_data</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     out_data = np.load(data_path + 'fluxes/' + flux + &quot;.npz&quot;).items()</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     y_train = np.reshape(out_data[0][1],(-1,1))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>     y_test = np.reshape(out_data[1][1],(-1,1)); del out_data</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Loading data...</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">65</span><span style=" color:#000080;">]:</span> x_train = x_train.reshape(112000,64,64,1)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> x_test = x_test.reshape(16000,64,64,1)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">66</span><span style=" color:#000080;">]:</span> print('x_train shape:', x_train.shape)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print(x_train.shape[0], 'train samples')</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print(x_test.shape[0], 'test samples')</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">x_train shape: (112000, 64, 64, 1)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">112000 train samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">16000 test samples</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">67</span><span style=" color:#000080;">]:</span> y_train = keras.utils.to_categorical(y_train, num_classes)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> y_test = keras.utils.to_categorical(y_test, num_classes)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model = Sequential()</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Conv2D(8, kernel_size=(4, 4), activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Conv2D(16, (4, 4), activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Conv2D(32, (4, 4), activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Flatten())</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Dense(150, activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Dropout(0.3))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Dense(1))</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">68</span><span style=" color:#000080;">]:</span> model.compile(loss=keras.losses.mean_squared_error,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>               optimizer=keras.optimizers.Adam(),</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>               metrics=['accuracy'])</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">69</span><span style=" color:#000080;">]:</span> model.fit(x_train, y_train,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>           batch_size=batch_size,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>           epochs=epochs,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>           verbose=1,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>           validation_data=(x_test, y_test))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> score = model.evaluate(x_test, y_test, verbose=0)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print('Test loss:', score[0])</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print('Test accuracy:', score[1])</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Traceback <span style=" color:#4682b4;">(most recent call last)</span>:</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;&lt;ipython-input-69-1dd65a75ad35&gt;&quot;</span>, line <span style=" color:#00ff00;">5</span>, in <span style=" color:#ff00ff;">&lt;module&gt;</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    validation_data=(x_test, y_test))</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training.py&quot;</span>, line <span style=" color:#00ff00;">952</span>, in <span style=" color:#ff00ff;">fit</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    batch_size=batch_size)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training.py&quot;</span>, line <span style=" color:#00ff00;">789</span>, in <span style=" color:#ff00ff;">_standardize_user_data</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    exception_prefix='target')</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#4682b4;">  File </span><span style=" color:#006400;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training_utils.py&quot;</span><span style=" color:#4682b4;">, line </span><span style=" color:#006400;">138</span><span style=" color:#4682b4;">, in </span><span style=" color:#9400d3;">standardize_input_data</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">    str(data_shape))</span></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">ValueError:</span> Error when checking target: expected dense_2 to have shape (1,) but got array with shape (10,)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">70</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">70</span><span style=" color:#000080;">]:</span> y_train = keras.utils.Sequence(y_train)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> y_test = keras.utils.Sequence(y_test)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model = Sequential()</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Conv2D(8, kernel_size=(4, 4), activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Conv2D(16, (4, 4), activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Conv2D(32, (4, 4), activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Flatten())</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Dense(150, activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Dropout(0.3))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Dense(1))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.compile(loss=keras.losses.mean_squared_error,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>               optimizer=keras.optimizers.Adam(),</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>               metrics=['accuracy'])</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Traceback <span style=" color:#4682b4;">(most recent call last)</span>:</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#4682b4;">  File </span><span style=" color:#006400;">&quot;&lt;ipython-input-70-833ec17f684e&gt;&quot;</span><span style=" color:#4682b4;">, line </span><span style=" color:#006400;">1</span><span style=" color:#4682b4;">, in </span><span style=" color:#9400d3;">&lt;module&gt;</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">    y_train = keras.utils.Sequence(y_train)</span></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">TypeError:</span> object() takes no parameters</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">71</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">71</span><span style=" color:#000080;">]:</span> model = Sequential()</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Conv2D(8, kernel_size=(4, 4), activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Conv2D(16, (4, 4), activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Conv2D(32, (4, 4), activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Flatten())</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Dense(150, activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Dropout(0.3))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Dense(1))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.compile(loss=keras.losses.mean_squared_error,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>               optimizer=keras.optimizers.Adam(),</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>               metrics=['accuracy'])</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">72</span><span style=" color:#000080;">]:</span> model.fit(x_train, y_train,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>           batch_size=batch_size,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>           epochs=epochs,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>           verbose=1,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>           validation_data=(x_test, y_test))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Traceback <span style=" color:#4682b4;">(most recent call last)</span>:</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;&lt;ipython-input-72-9695118658e6&gt;&quot;</span>, line <span style=" color:#00ff00;">5</span>, in <span style=" color:#ff00ff;">&lt;module&gt;</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    validation_data=(x_test, y_test))</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training.py&quot;</span>, line <span style=" color:#00ff00;">952</span>, in <span style=" color:#ff00ff;">fit</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    batch_size=batch_size)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training.py&quot;</span>, line <span style=" color:#00ff00;">789</span>, in <span style=" color:#ff00ff;">_standardize_user_data</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    exception_prefix='target')</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#4682b4;">  File </span><span style=" color:#006400;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training_utils.py&quot;</span><span style=" color:#4682b4;">, line </span><span style=" color:#006400;">138</span><span style=" color:#4682b4;">, in </span><span style=" color:#9400d3;">standardize_input_data</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">    str(data_shape))</span></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">ValueError:</span> Error when checking target: expected dense_4 to have shape (1,) but got array with shape (10,)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">73</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">73</span><span style=" color:#000080;">]:</span> import keras</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> from keras.datasets import mnist</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> from keras.models import Sequential</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> from keras.layers import Dense, Dropout, Flatten</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> from keras.layers import Conv2D, MaxPooling2D</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> import numpy as np</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> batch_size = 100</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> epochs = 1</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">74</span><span style=" color:#000080;">]:</span> x_train = x_train.reshape(112000,64,64,1)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> x_test = x_test.reshape(16000,64,64,1)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print('x_train shape:', x_train.shape)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print(x_train.shape[0], 'train samples')</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> print(x_test.shape[0], 'test samples')</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> # convert class vectors to binary class matrices</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> # y_train = keras.utils.Sequence(y_train)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> # y_test = keras.utils.Sequence(y_test)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model = Sequential()</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Conv2D(8, kernel_size=(4, 4), activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Conv2D(16, (4, 4), activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Conv2D(32, (4, 4), activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(MaxPooling2D(pool_size=(2, 2)))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Flatten())</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Dense(150, activation='relu'))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Dropout(0.3))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.add(Dense(1))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> </p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span> model.compile(loss=keras.losses.mean_squared_error,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>               optimizer=keras.optimizers.Adam(),</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>               metrics=['accuracy'])</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">x_train shape: (112000, 64, 64, 1)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">112000 train samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">16000 test samples</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">75</span><span style=" color:#000080;">]:</span> model.fit(x_train, y_train,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>           batch_size=batch_size,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>           epochs=epochs,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>           verbose=1,</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">    ...:</span>           validation_data=(x_test, y_test))</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Traceback <span style=" color:#4682b4;">(most recent call last)</span>:</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;&lt;ipython-input-75-9695118658e6&gt;&quot;</span>, line <span style=" color:#00ff00;">5</span>, in <span style=" color:#ff00ff;">&lt;module&gt;</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    validation_data=(x_test, y_test))</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training.py&quot;</span>, line <span style=" color:#00ff00;">952</span>, in <span style=" color:#ff00ff;">fit</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    batch_size=batch_size)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training.py&quot;</span>, line <span style=" color:#00ff00;">789</span>, in <span style=" color:#ff00ff;">_standardize_user_data</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    exception_prefix='target')</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#4682b4;">  File </span><span style=" color:#006400;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training_utils.py&quot;</span><span style=" color:#4682b4;">, line </span><span style=" color:#006400;">138</span><span style=" color:#4682b4;">, in </span><span style=" color:#9400d3;">standardize_input_data</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">    str(data_shape))</span></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">ValueError:</span> Error when checking target: expected dense_6 to have shape (1,) but got array with shape (10,)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">76</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">76</span><span style=" color:#000080;">]:</span> runfile('/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py', wdir='/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG')</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">x_train shape: (112000, 64, 64, 1)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">112000 train samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">16000 test samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Traceback <span style=" color:#4682b4;">(most recent call last)</span>:</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;&lt;ipython-input-76-770693784051&gt;&quot;</span>, line <span style=" color:#00ff00;">1</span>, in <span style=" color:#ff00ff;">&lt;module&gt;</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    runfile('/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py', wdir='/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG')</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/spyder_kernels/customize/spydercustomize.py&quot;</span>, line <span style=" color:#00ff00;">668</span>, in <span style=" color:#ff00ff;">runfile</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    execfile(filename, namespace)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/spyder_kernels/customize/spydercustomize.py&quot;</span>, line <span style=" color:#00ff00;">108</span>, in <span style=" color:#ff00ff;">execfile</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    exec(compile(f.read(), filename, 'exec'), namespace)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py&quot;</span>, line <span style=" color:#00ff00;">52</span>, in <span style=" color:#ff00ff;">&lt;module&gt;</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    validation_data=(x_test, y_test))</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training.py&quot;</span>, line <span style=" color:#00ff00;">952</span>, in <span style=" color:#ff00ff;">fit</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    batch_size=batch_size)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training.py&quot;</span>, line <span style=" color:#00ff00;">789</span>, in <span style=" color:#ff00ff;">_standardize_user_data</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    exception_prefix='target')</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#4682b4;">  File </span><span style=" color:#006400;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training_utils.py&quot;</span><span style=" color:#4682b4;">, line </span><span style=" color:#006400;">138</span><span style=" color:#4682b4;">, in </span><span style=" color:#9400d3;">standardize_input_data</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">    str(data_shape))</span></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">ValueError:</span> Error when checking target: expected dense_8 to have shape (1,) but got array with shape (10,)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">77</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">77</span><span style=" color:#000080;">]:</span> runfile('/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py', wdir='/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG')</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">x_train shape: (112000, 64, 64, 1)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">112000 train samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">16000 test samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Train on 112000 samples, validate on 16000 samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Epoch 1/1</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">112000/112000 [==============================] - 26s 230us/step - loss: 0.0078 - acc: 0.9900 - val_loss: 0.0016 - val_acc: 0.9921</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Test loss: 0.0015767166579098556</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Test accuracy: 0.992125</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">78</span><span style=" color:#000080;">]:</span> runfile('/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py', wdir='/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG')</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">x_train shape: (112000, 64, 64, 1)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">112000 train samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">16000 test samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Traceback <span style=" color:#4682b4;">(most recent call last)</span>:</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;&lt;ipython-input-78-770693784051&gt;&quot;</span>, line <span style=" color:#00ff00;">1</span>, in <span style=" color:#ff00ff;">&lt;module&gt;</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    runfile('/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py', wdir='/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG')</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/spyder_kernels/customize/spydercustomize.py&quot;</span>, line <span style=" color:#00ff00;">668</span>, in <span style=" color:#ff00ff;">runfile</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    execfile(filename, namespace)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/spyder_kernels/customize/spydercustomize.py&quot;</span>, line <span style=" color:#00ff00;">108</span>, in <span style=" color:#ff00ff;">execfile</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    exec(compile(f.read(), filename, 'exec'), namespace)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py&quot;</span>, line <span style=" color:#00ff00;">50</span>, in <span style=" color:#ff00ff;">&lt;module&gt;</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    validation_data=(x_test, y_test))</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training.py&quot;</span>, line <span style=" color:#00ff00;">952</span>, in <span style=" color:#ff00ff;">fit</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    batch_size=batch_size)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training.py&quot;</span>, line <span style=" color:#00ff00;">789</span>, in <span style=" color:#ff00ff;">_standardize_user_data</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    exception_prefix='target')</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#4682b4;">  File </span><span style=" color:#006400;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training_utils.py&quot;</span><span style=" color:#4682b4;">, line </span><span style=" color:#006400;">138</span><span style=" color:#4682b4;">, in </span><span style=" color:#9400d3;">standardize_input_data</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">    str(data_shape))</span></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">ValueError:</span> Error when checking target: expected dense_12 to have shape (1,) but got array with shape (10,)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">79</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">79</span><span style=" color:#000080;">]:</span> runfile('/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py', wdir='/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG')</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">x_train shape: (112000, 64, 64, 1)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">112000 train samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">16000 test samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Train on 112000 samples, validate on 16000 samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Epoch 1/1</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">112000/112000 [==============================] - 25s 226us/step - loss: 0.0082 - acc: 0.9892 - val_loss: 0.0016 - val_acc: 0.9921</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Test loss: 0.0015665923195492724</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Test accuracy: 0.992125</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">80</span><span style=" color:#000080;">]:</span> runfile('/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py', wdir='/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG')</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">x_train shape: (112000, 64, 64, 1)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">112000 train samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">16000 test samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Traceback <span style=" color:#4682b4;">(most recent call last)</span>:</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;&lt;ipython-input-80-770693784051&gt;&quot;</span>, line <span style=" color:#00ff00;">1</span>, in <span style=" color:#ff00ff;">&lt;module&gt;</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    runfile('/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py', wdir='/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG')</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/spyder_kernels/customize/spydercustomize.py&quot;</span>, line <span style=" color:#00ff00;">668</span>, in <span style=" color:#ff00ff;">runfile</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    execfile(filename, namespace)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/spyder_kernels/customize/spydercustomize.py&quot;</span>, line <span style=" color:#00ff00;">108</span>, in <span style=" color:#ff00ff;">execfile</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    exec(compile(f.read(), filename, 'exec'), namespace)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py&quot;</span>, line <span style=" color:#00ff00;">51</span>, in <span style=" color:#ff00ff;">&lt;module&gt;</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    validation_data=(x_test, y_test))</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training.py&quot;</span>, line <span style=" color:#00ff00;">952</span>, in <span style=" color:#ff00ff;">fit</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    batch_size=batch_size)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training.py&quot;</span>, line <span style=" color:#00ff00;">789</span>, in <span style=" color:#ff00ff;">_standardize_user_data</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    exception_prefix='target')</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#4682b4;">  File </span><span style=" color:#006400;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training_utils.py&quot;</span><span style=" color:#4682b4;">, line </span><span style=" color:#006400;">138</span><span style=" color:#4682b4;">, in </span><span style=" color:#9400d3;">standardize_input_data</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">    str(data_shape))</span></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">ValueError:</span> Error when checking target: expected dense_16 to have shape (11,) but got array with shape (10,)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">81</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">80</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">80</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">80</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">80</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">80</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">80</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">80</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">81</span><span style=" color:#000080;">]:</span> runfile('/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py', wdir='/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG')</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">x_train shape: (112000, 64, 64, 1)</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">112000 train samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">16000 test samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Train on 112000 samples, validate on 16000 samples</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Epoch 1/1</p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"> 34300/112000 [========&gt;.....................] - ETA: 17s - loss: 0.0399 - acc: 0.9630 Traceback <span style=" color:#4682b4;">(most recent call last)</span>:</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;&lt;ipython-input-81-770693784051&gt;&quot;</span>, line <span style=" color:#00ff00;">1</span>, in <span style=" color:#ff00ff;">&lt;module&gt;</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    runfile('/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py', wdir='/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG')</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/spyder_kernels/customize/spydercustomize.py&quot;</span>, line <span style=" color:#00ff00;">668</span>, in <span style=" color:#ff00ff;">runfile</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    execfile(filename, namespace)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/spyder_kernels/customize/spydercustomize.py&quot;</span>, line <span style=" color:#00ff00;">108</span>, in <span style=" color:#ff00ff;">execfile</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    exec(compile(f.read(), filename, 'exec'), namespace)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/Documents/Summer2018/CaltechSURF/QG/keras_quickcode.py&quot;</span>, line <span style=" color:#00ff00;">51</span>, in <span style=" color:#ff00ff;">&lt;module&gt;</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    validation_data=(x_test, y_test))</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training.py&quot;</span>, line <span style=" color:#00ff00;">1039</span>, in <span style=" color:#ff00ff;">fit</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    validation_steps=validation_steps)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/engine/training_arrays.py&quot;</span>, line <span style=" color:#00ff00;">199</span>, in <span style=" color:#ff00ff;">fit_loop</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    outs = f(ins_batch)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py&quot;</span>, line <span style=" color:#00ff00;">2715</span>, in <span style=" color:#ff00ff;">__call__</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    return self._call(inputs)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">  File <span style=" color:#00ff00;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py&quot;</span>, line <span style=" color:#00ff00;">2675</span>, in <span style=" color:#ff00ff;">_call</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">    fetched = self._callable_fn(*array_vals)</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#4682b4;">  File </span><span style=" color:#006400;">&quot;/Users/tomgeorge/anaconda3/lib/python3.6/site-packages/tensorflow/python/client/session.py&quot;</span><span style=" color:#4682b4;">, line </span><span style=" color:#006400;">1382</span><span style=" color:#4682b4;">, in </span><span style=" color:#9400d3;">__call__</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">    run_metadata_ptr)</span></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#8b0000;">KeyboardInterrupt</span></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">82</span><span style=" color:#000080;">]:</span> </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#000080;">In [</span><span style=" font-weight:600; color:#000080;">82</span><span style=" color:#000080;">]:</span> </p></body></html>

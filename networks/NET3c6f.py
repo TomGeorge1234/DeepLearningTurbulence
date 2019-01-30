@@ -8,11 +8,11 @@ def neuralnetwork(x):
     #builds our graph. x is an input tensor with shape (batch size, 64, 64) 
     #returns y, the output, at tensor of shape (batch size, 1)
     with tf.name_scope('reshape'):
-        x_image = tf.reshape(x, [-1, 32, 32, 1])
+        x_image = tf.reshape(x, [-1, 64, 64, 1])
         
     with tf.name_scope('pool1'):
         y_pool1 = avg_pool_2x2(x_image)
-        
+    
     with tf.name_scope('conv1'):
         W_conv1 = weight_variable([4, 4, 1, 8])
         B_conv1 = bias_variable([8])
@@ -33,23 +33,46 @@ def neuralnetwork(x):
         W_conv3 = weight_variable([4, 4, 16, 32])
         B_conv3 = bias_variable([32])
         y_conv3 = tf.nn.relu(conv2d(y_pool3, W_conv3) + B_conv3)  
+        
+    with tf.name_scope('pool4'):
+        y_pool4 = max_pool_2x2(y_conv3)
 
     with tf.name_scope('fc1'):
         W_fc1 = weight_variable([4 * 4 * 32, 150])
         B_fc1 = bias_variable([150])
-        y_conv3_flat = tf.reshape(y_conv3, [-1, 4*4*32])
+        y_conv3_flat = tf.reshape(y_pool4, [-1, 4*4*32])
         y_fc1 = tf.nn.relu(tf.matmul(y_conv3_flat, W_fc1) + B_fc1)
+
+    with tf.name_scope('fc2'):
+        W_fc2 = weight_variable([150, 50])
+        B_fc2 = bias_variable([50])
+        y_fc2 = tf.nn.relu(tf.matmul(y_fc1, W_fc2) + B_fc2)
+
+    with tf.name_scope('fc3'):
+        W_fc3 = weight_variable([50, 20])
+        B_fc3 = bias_variable([20])
+        y_fc3 = tf.nn.relu(tf.matmul(y_fc2, W_fc3) + B_fc3)
+
+    with tf.name_scope('fc4'):
+        W_fc4 = weight_variable([20, 20])
+        B_fc4 = bias_variable([20])
+        y_fc4 = tf.nn.relu(tf.matmul(y_fc3, W_fc4) + B_fc4)
+
+    with tf.name_scope('fc5'):
+        W_fc5 = weight_variable([20, 20])
+        B_fc5 = bias_variable([20])
+        y_fc5 = tf.nn.relu(tf.matmul(y_fc4, W_fc5) + B_fc5)
         
     with tf.name_scope('dropout'):
         keep_prob = tf.placeholder(tf.float32)
-        y_fc1_drop = tf.nn.dropout(y_fc1, keep_prob)
+        y_fc5_drop = tf.nn.dropout(y_fc5, keep_prob)
 
-    with tf.name_scope('fc2'):
-        W_fc2 = weight_variable([150, 1])
-        B_fc2 = bias_variable([1])
-        y_fc2 = tf.matmul(y_fc1_drop, W_fc2) + B_fc2
+    with tf.name_scope('fc6'):
+        W_fc6 = weight_variable([20, 1])
+        B_fc6 = bias_variable([1])
+        y_fc6 = tf.matmul(y_fc5_drop, W_fc6) + B_fc6
         
-    return y_fc2, keep_prob
+    return y_fc6, keep_prob
 
 #define variables and functions 
 def weight_variable(shape):
