@@ -1,6 +1,6 @@
 # DeepLearningTurbulence
 
-I use deep convolutional neural networks to predict eddy heat fluxes in turbulent ocean flows. This work was published in Nature Communications and can be found here: https://www.nature.com/articles/s41467-020-20779-9. 
+I use deep convolutional neural networks to predict eddy heat fluxes in turbulent ocean flows. This work was completed for my Summer Undergraduate Research Fellowship (SURF) in 2018 under Prof. Andrew Thompson and Prof. Georgy Manucharyan and was eventually published. It can be found here: https://www.nature.com/articles/s41467-020-20779-9. 
 
 First, we simulate a two-layer ocean dominated by quasigeostrophic turbulence. Shown are the sea surface height (SSH) anomaly and potential vorticity fields of the upper layer only.  
 
@@ -32,5 +32,10 @@ To use (i.e. train a neural network on QG data) simply open QGmain.py and follow
 
 ## Notes: 
 The code QGmain won't actually work, since the data isn't saved onto GitHub as it is enormous. Please contact me and I can arrange to have the data sent to you. Code in this repo is not the final code used in the paper (which was eventually rewritten for keras and can be found here https://figshare.com/articles/dataset/DeepLearningTurbulence/11920905/1) 
+
+## Info 
+* Author: Tom George
+* Institution: Caltech and University of Cambridge 
+* Email: tomgeorge1@btinternet.com
 
 
