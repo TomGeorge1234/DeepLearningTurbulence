@@ -1,12 +1,12 @@
 # DeepLearningTurbulence
 
-I use deep convolutional neural networks to predict eddy heat fluxes in turbulent ocean flows. This work was published in Nature Communications and can be found here: https://www.nature.com/articles/s41467-020-20779-9. Note, code in this repo is not the final code used in the paper (which was eventually rewritten for keras and can be found here https://figshare.com/articles/dataset/DeepLearningTurbulence/11920905/1) 
+I use deep convolutional neural networks to predict eddy heat fluxes in turbulent ocean flows. This work was published in Nature Communications and can be found here: https://www.nature.com/articles/s41467-020-20779-9. 
 
-First, we simulate a two-layer ocean dominated by quasigeostrophic turbulence. 
+First, we simulate a two-layer ocean dominated by quasigeostrophic turbulence. Shown are the sea surface height (SSH) anomaly and potential vorticity fields of the upper layer only.  
 
 ![](./figs/sim.gif)
 
-Next we construct a CNN and train it to predict the eddy heat flux given only partial information about the flow, specifically only given the sea surface height field (SSH) which is readily accessible from satellite altimetry. 
+Next, we construct a CNN and train it to predict the PV eddy heat flux given only partial information about the flow, specifically given only the sea surface height field (SSH) - a quantity which is readily accessible from satellite altimetry. 
 
 ![](./figs/cnn.gif)
 ![](./figs/learning.gif)
@@ -30,6 +30,7 @@ To use (i.e. train a neural network on QG data) simply open QGmain.py and follow
 •figures1&2 contains figures used for interim reports 1 and 2
 •figures3 contains figures used after this
 
-## Notes: The code QGmain won't actually work, since the data isn't saved onto GitHub as it is enormous. Please contact me and I can arrange to have the data sent to you. 
+## Notes: 
+The code QGmain won't actually work, since the data isn't saved onto GitHub as it is enormous. Please contact me and I can arrange to have the data sent to you. Code in this repo is not the final code used in the paper (which was eventually rewritten for keras and can be found here https://figshare.com/articles/dataset/DeepLearningTurbulence/11920905/1) 
 
 
